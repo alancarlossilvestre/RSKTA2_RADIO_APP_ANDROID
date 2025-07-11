@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "948451485950",
+    "project_id": "world-news-6767b",
+    "storage_bucket": "world-news-6767b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948451485950:android:c921d0b1633fd566bc5daf",
+        "android_client_info": {
+          "package_name": "com.example.radio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "948451485950-caoot9k3313iv68ra2ug9941b9001kkm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5NMXTe2EIEfRW0FDMkwH9dLHcbt4eHuo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "948451485950-caoot9k3313iv68ra2ug9941b9001kkm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
