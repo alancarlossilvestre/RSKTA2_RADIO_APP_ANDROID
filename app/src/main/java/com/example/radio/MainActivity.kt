@@ -1,33 +1,16 @@
 package com.example.radio
 
-import android.annotation.SuppressLint
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.*
-import androidx.activity.compose.setContent
+
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.platform.LocalContext
-import androidx.credentials.CredentialManager
-import androidx.credentials.CustomCredential
-import androidx.credentials.GetCredentialRequest
-import androidx.credentials.GetCredentialResponse
-import androidx.credentials.exceptions.GetCredentialException
-import androidx.media3.common.MediaItem
-import androidx.media3.exoplayer.ExoPlayer
+
 import com.example.radio.presenter.MainPresenter
 import com.example.radio.view.MainView
-import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
-import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
-import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
+import com.example.radio.R
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
-
 
 class MainActivity : AppCompatActivity(), MainView{
 
@@ -39,7 +22,34 @@ class MainActivity : AppCompatActivity(), MainView{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
+
+        //verifica el inicio de sesion
+
+        presenter = MainPresenter(this, this)
+
+        //cerrar sesion
+        val loginButton = findViewById<Button>(R.id.google_sign_in_button_id)
+        val logoutButton = findViewById<Button>(R.id.btnLogout)
+
+        loginButton.setOnClickListener {
+            presenter.loginWithGoogle()
+        }
+
+        logoutButton.setOnClickListener {
+            presenter.onLogoutClicked()
+        }
+
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null){
+            //el usuario ya esta logeado
+            Log.d("AuthCheck", "Usuario ya logueado: ${currentUser.email}")
+            val displayName = currentUser.displayName ?: "Usuario"
+            Toast.makeText(this, "¡Bienvenido, $displayName!", Toast.LENGTH_SHORT).show()
+            presenter.onUserAlreadyLoggedIn()
+
+        }
 
         btnPlay = findViewById(R.id.btnPlayStream)
         txtStatus = findViewById(R.id.txtStatus)
@@ -53,87 +63,7 @@ class MainActivity : AppCompatActivity(), MainView{
         }
 
         googlebtn.setOnClickListener{
-            setContent {
-                login_google()
-            }
-        }
-    }
-
-    @SuppressLint("CoroutineCreationDuringComposition")
-    @Composable
-    fun login_google(){
-        val context = LocalContext.current
-        val coroutineScope:CoroutineScope= rememberCoroutineScope()
-        val credentialManager= CredentialManager.create(context)
-        val signInWithGoogleOption: GetSignInWithGoogleOption = GetSignInWithGoogleOption.Builder(getString(R.string.web_client))
-            .setNonce("nonce")
-        .build()
-        val request: GetCredentialRequest = GetCredentialRequest.Builder()
-            .addCredentialOption(signInWithGoogleOption)
-            .build()
-
-        coroutineScope.launch {
-            try {
-                val result = credentialManager.getCredential(
-                    request = request,
-                    context = context,
-                )
-                handleSignIn(result)
-            } catch (e: GetCredentialException) {
-                Toast.makeText(context,"usuario o contraseña incorrecto" +e, Toast.LENGTH_LONG).show()
-            }
-        }
-
-    }
-
-    fun handleSignIn(result: GetCredentialResponse) {
-        // Handle the successfully returned credential.
-        val credential = result.credential
-
-        when (credential) {
-            is CustomCredential -> {
-                if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
-                    try {
-                        // Use googleIdTokenCredential and extract id to validate and
-                        // authenticate on your server.
-                        val googleIdTokenCredential = GoogleIdTokenCredential
-                            .createFrom(credential.data)
-
-                        val credencial=GoogleAuthProvider.getCredential(googleIdTokenCredential.idToken, null)
-
-                        FirebaseAuth.getInstance().signInWithCredential(credencial)
-                            .addOnCompleteListener(this) { task ->
-                                if (task.isSuccessful) {
-                                    // Iniciar la actividad principal
-                                    val intent = Intent(this, MainActivity::class.java)
-                                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                    startActivity(intent)
-                                    finish()
-                                } else {
-                                    // Manejo del error, por ejemplo mostrar un Toast
-                                    Toast.makeText(this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show()
-
-                                }
-
-                            }
-
-                    } catch (e: GoogleIdTokenParsingException) {
-                        //Log.e(TAG, "Received an invalid google id token response", e)
-                        Toast.makeText(applicationContext,"Received an invalid google id token response"+e , Toast.LENGTH_LONG).show()
-                    }
-                }
-                else {
-                    // Catch any unrecognized credential type here.
-                    //Log.e(TAG, "Unexpected type of credential")
-                    Toast.makeText(applicationContext,"Unexpected type of credential" , Toast.LENGTH_LONG).show()
-                }
-            }
-
-            else -> {
-                // Catch any unrecognized credential type here.
-                //Log.e(TAG, "Unexpected type of credential")
-                Toast.makeText(applicationContext,"Unexpected type of credential" , Toast.LENGTH_LONG).show()
-            }
+            presenter.loginWithGoogle()
         }
     }
 
@@ -150,6 +80,64 @@ class MainActivity : AppCompatActivity(), MainView{
         txtStatus.text = message
     }
 
+    override fun showLoginSuccess() {
+        Toast.makeText(this, "Inicio de sesion exitoso", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showLoginError(message: String) {
+        Toast.makeText(this, "Error: $message", Toast.LENGTH_LONG).show()
+        Log.e("AuthModel", "Error de credencial: ${message}")
+    }
+
+    override fun navigateToComentsFragment() {
+
+        val container = findViewById<FrameLayout>(R.id.comments_fragment)
+        container.visibility = View.VISIBLE
+
+
+        val transaction = supportFragmentManager.beginTransaction()
+        //animacion
+        transaction.setCustomAnimations(
+            android.R.anim.fade_in,
+            android.R.anim.fade_out,
+            android.R.anim.fade_in,
+            android.R.anim.fade_out
+        )
+        transaction.replace(R.id.comments_fragment, CommentsFragment())
+        transaction.commit()
+    }
+
+    override fun hideLoginButton() {
+        findViewById<Button>(R.id.google_sign_in_button_id).visibility = View.GONE
+
+    }
+
+    override fun showLoginButton() {
+        findViewById<Button>(R.id.google_sign_in_button_id).visibility = View.VISIBLE
+
+    }
+
+    override fun showLogoutButton() {
+        findViewById<Button>(R.id.btnLogout).visibility = View.VISIBLE
+    }
+
+    override fun hideLogoutButton() {
+        findViewById<Button>(R.id.btnLogout).visibility = View.GONE
+    }
+
+    override fun removeCommentsFragment() {
+        val fragment = supportFragmentManager.findFragmentById(R.id.comments_fragment)
+        if (fragment != null) {
+            supportFragmentManager.beginTransaction()
+                .remove(fragment)
+                .commit()
+        }
+        findViewById<FrameLayout>(R.id.comments_fragment).visibility = View.GONE
+    }
+
+    override fun showGoodbyeMessage(name: String) {
+        Toast.makeText(this, "Adiós, $name 👋", Toast.LENGTH_SHORT).show()
+    }
 
 
 }

@@ -3,16 +3,19 @@ package com.example.radio.presenter
 import android.content.Context
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import com.example.radio.model.StreamModel
 import com.example.radio.view.MainView
 import java.net.HttpURLConnection
 import java.net.URL
-
+import com.example.radio.model.AuthModel
 import androidx.media3.common.Player
 import androidx.media3.common.PlaybackException
 import androidx.media3.exoplayer.DefaultLoadControl
+import com.example.radio.MainActivity
+import com.google.firebase.auth.FirebaseAuth
 
 
 class MainPresenter(private val context: Context, private val view: MainView){
@@ -86,6 +89,44 @@ class MainPresenter(private val context: Context, private val view: MainView){
     fun releasePlayer() {
         exoPlayer?.release()
         exoPlayer = null
+    }
+
+    fun loginWithGoogle() {
+        val authModel = AuthModel(context)
+        authModel.loginWithGoogle(
+            onSuccess = {
+                (context as? MainActivity)?.runOnUiThread {
+                    view.showLoginSuccess()
+                    view.hideLoginButton()
+                    view.showLogoutButton()
+                    view.navigateToComentsFragment()
+                    // Podrías redirigir a otra pantalla aquí si lo deseas
+                }
+            },
+            onFailure = { error ->
+                (context as? MainActivity)?.runOnUiThread {
+                    view.showLoginError(error)
+                }
+            }
+        )
+    }
+
+    fun onUserAlreadyLoggedIn() {
+        view.hideLoginButton()
+        view.showLogoutButton()
+        view.navigateToComentsFragment()
+    }
+
+
+    fun onLogoutClicked() {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val name = currentUser?.displayName ?: "usuario"
+        view.showGoodbyeMessage(name)
+
+        FirebaseAuth.getInstance().signOut()
+        view.showLoginButton()
+        view.hideLogoutButton()
+        view.removeCommentsFragment()
     }
 
 }

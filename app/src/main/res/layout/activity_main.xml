@@ -23,11 +23,25 @@
         android:layout_height="wrap_content"
         android:text="Reproducir" />
 
-        <Button
-            android:id="@+id/google_sign_in_button_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Login" />
+    <Button
+        android:id="@+id/google_sign_in_button_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login" />
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cerrar sesión"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:id="@+id/comments_fragment"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#EFEFEF"
+        android:visibility="gone"/>
 
 
 
