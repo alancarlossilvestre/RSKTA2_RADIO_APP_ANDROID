@@ -17,9 +17,9 @@
         android:theme="@style/Theme.Radio"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ScrollingActivity"
+            android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/title_activity_scrolling"
+            android:label="Resktado2"
             android:theme="@style/Theme.Radio.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,9 +28,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".ScrollingActivity"
             android:exported="false"
-            android:label="@string/app_name"
             android:theme="@style/Theme.Radio"/>
 
     </application>
