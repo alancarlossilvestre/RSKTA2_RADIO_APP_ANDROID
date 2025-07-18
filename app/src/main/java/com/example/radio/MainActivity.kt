@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity(), MainView{
     private lateinit var txtStatus: TextView
     private lateinit var presenter: MainPresenter
 
-    private lateinit var googlebtn: Button
+    private lateinit var googlebtn: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity(), MainView{
         presenter = MainPresenter(this, this)
 
         //cerrar sesion
-        val loginButton = findViewById<Button>(R.id.google_sign_in_button_id)
+        val loginButton = findViewById<LinearLayout>(R.id.google_sign_in_button_id)
         val logoutButton = findViewById<Button>(R.id.btnLogout)
 
         loginButton.setOnClickListener {
@@ -108,12 +108,12 @@ class MainActivity : AppCompatActivity(), MainView{
     }
 
     override fun hideLoginButton() {
-        findViewById<Button>(R.id.google_sign_in_button_id).visibility = View.GONE
+        findViewById<LinearLayout>(R.id.google_sign_in_button_id).visibility = View.GONE
 
     }
 
     override fun showLoginButton() {
-        findViewById<Button>(R.id.google_sign_in_button_id).visibility = View.VISIBLE
+        findViewById<LinearLayout>(R.id.google_sign_in_button_id).visibility = View.VISIBLE
 
     }
 
