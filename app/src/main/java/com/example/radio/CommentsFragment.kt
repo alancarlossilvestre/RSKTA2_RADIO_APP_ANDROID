@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.radio.R
+import com.example.radio.ui.theme.utils.CircleTransform
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -23,6 +24,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ServerValue
 import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
 import org.w3c.dom.Comment
 
 class CommentsFragment : Fragment() {
@@ -170,12 +172,13 @@ class CommentsFragment : Fragment() {
 
             // Cargar foto de perfil sin Glide
             comment.senderPhoto?.let { photoUrl ->
-                try {
-                    holder.ivProfile.setImageURI(Uri.parse(photoUrl))
-                } catch (e: Exception) {
-                    //holder.ivProfile.setImageResource(R.drawable.ic_default_profile)
-                }
-            } //?: holder.ivProfile.setImageResource(R.drawable.ic_default_profile)
+                Picasso.get()
+                    .load(photoUrl)
+                    .placeholder(R.drawable.ic_default_profile)
+                    .error(R.drawable.ic_default_profile)
+                    .transform(CircleTransform())
+                    .into(holder.ivProfile)
+            } ?: holder.ivProfile.setImageResource(R.drawable.ic_default_profile)
         }
 
         override fun getItemCount(): Int = comments.size

@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity(), MainView{
     private lateinit var btnPlay: Button
     private lateinit var txtStatus: TextView
     private lateinit var presenter: MainPresenter
+    private lateinit var progressBar: ProgressBar
 
     private lateinit var googlebtn: LinearLayout
 
@@ -32,6 +33,8 @@ class MainActivity : AppCompatActivity(), MainView{
         //cerrar sesion
         val loginButton = findViewById<LinearLayout>(R.id.google_sign_in_button_id)
         val logoutButton = findViewById<Button>(R.id.btnLogout)
+
+
 
         loginButton.setOnClickListener {
             presenter.loginWithGoogle()
@@ -58,6 +61,8 @@ class MainActivity : AppCompatActivity(), MainView{
 
         presenter = MainPresenter(this, this)
 
+        progressBar = findViewById(R.id.progressBar)
+
         btnPlay.setOnClickListener {
             presenter.togglePlayback()
         }
@@ -65,6 +70,8 @@ class MainActivity : AppCompatActivity(), MainView{
         googlebtn.setOnClickListener{
             presenter.loginWithGoogle()
         }
+
+        presenter.initializePlayer()
     }
 
     override fun onDestroy() {
@@ -137,6 +144,14 @@ class MainActivity : AppCompatActivity(), MainView{
 
     override fun showGoodbyeMessage(name: String) {
         Toast.makeText(this, "Adiós, $name 👋", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showLoading() {
+        progressBar.visibility = View.VISIBLE
+    }
+
+    override fun hideLoading() {
+        progressBar.visibility = View.GONE
     }
 
 

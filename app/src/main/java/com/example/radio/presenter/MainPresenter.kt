@@ -33,7 +33,10 @@ class MainPresenter(private val context: Context, private val view: MainView){
         }
     }
 
-    private fun initializePlayer() {
+     fun initializePlayer(retryCount: Int = 0) {
+        android.os.Handler(android.os.Looper.getMainLooper()).post {
+            view.showLoading()
+        }
         Thread {
             try {
                 val url = URL(stream.streamUrl)
@@ -51,6 +54,7 @@ class MainPresenter(private val context: Context, private val view: MainView){
                     // Servidor accesible → reproducir
                     android.os.Handler(android.os.Looper.getMainLooper()).post{
                        startPlayback()
+                        view.hideLoading()
                     }
                 } else {
                     Log.e(TAG, "Servidor no disponible, código HTTP: $responseCode")
@@ -60,6 +64,7 @@ class MainPresenter(private val context: Context, private val view: MainView){
 
             } catch (e: Exception) {
                 Log.e(TAG, "Error al conectar con el stream", e)
+                retryConnection(retryCount)
             }
         }.start()
     }
@@ -127,6 +132,19 @@ class MainPresenter(private val context: Context, private val view: MainView){
         view.showLoginButton()
         view.hideLogoutButton()
         view.removeCommentsFragment()
+    }
+
+    private fun retryConnection(retryCount: Int) {
+        if (retryCount < 3) { // Máximo 3 reintentos
+            Log.d(TAG, "Reintentando conexión... intento ${retryCount + 1}")
+            Thread.sleep(2000) // Espera antes de reintentar
+            initializePlayer(retryCount + 1)
+        } else {
+            android.os.Handler(android.os.Looper.getMainLooper()).post {
+                view.hideLoading()
+                view.showStatusMessage("No se pudo conectar al stream. Intenta más tarde.")
+            }
+        }
     }
 
 }

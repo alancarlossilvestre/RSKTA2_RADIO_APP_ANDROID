@@ -93,5 +93,8 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.2.1")
     //implemento lotie
     implementation ("com.airbnb.android:lottie:3.4.0")
+    // carga de imagenes exteriores con piccaso
+    implementation("com.squareup.picasso:picasso:2.8")
+    implementation("com.facebook.android:facebook-android-sdk:[4,5)")
 
 }

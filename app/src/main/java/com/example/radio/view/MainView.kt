@@ -12,5 +12,7 @@ interface MainView{
     fun hideLogoutButton()
     fun removeCommentsFragment()
     fun showGoodbyeMessage(name: String)
+    fun showLoading()
+    fun hideLoading()
 
 }

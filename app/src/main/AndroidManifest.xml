@@ -19,7 +19,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="Resktado2"
+            android:label="Rskt2"
             android:theme="@style/Theme.Radio.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
