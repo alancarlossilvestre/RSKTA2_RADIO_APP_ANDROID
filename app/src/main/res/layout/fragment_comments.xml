@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/windowBackground"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:background="@drawable/background_gradient">
 
     <!-- Indicador de carga -->
     <ProgressBar
@@ -33,19 +33,23 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- RecyclerView para los comentarios -->
+
+    <!-- Contenedor para el campo de entrada -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_comments"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:clipToPadding="false"
-        android:paddingBottom="8dp"
+        android:paddingBottom="5dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/cl_input_container"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        />
 
-    <!-- Contenedor para el campo de entrada -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_input_container"
         android:layout_width="0dp"
@@ -54,7 +58,9 @@
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="?attr/actionBarDivider"
+        >
 
         <!-- Botón para adjuntar -->
         <ImageButton
@@ -71,10 +77,10 @@
         <EditText
             android:id="@+id/et_comment"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:hint="Escribe un comentario..."
+            android:hint="comentar..."
             android:imeOptions="actionSend"
             android:inputType="textMultiLine|textCapSentences"
             android:maxLines="4"
@@ -84,7 +90,12 @@
             app:layout_constraintEnd_toStartOf="@id/ib_send"
             app:layout_constraintStart_toEndOf="@id/ib_attach"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/btn_border"/>
+            android:background="@drawable/btn_border"
+            android:paddingStart="10dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="5dp"
+
+            />
 
         <!-- Botón para enviar -->
         <ImageButton

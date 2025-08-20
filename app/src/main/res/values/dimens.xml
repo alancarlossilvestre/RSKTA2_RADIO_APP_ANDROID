@@ -4,4 +4,9 @@
     <dimen name="text_margin">16dp</dimen>
     <!-- En res/values/dimens.xml -->
     <dimen name="status_bar_height">24dp</dimen>
+
+    <style name="MyTransparentBottomSheetDialogTheme" parent="Theme.AppCompat.Light">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:colorBackground">@android:color/transparent</item>
+    </style>
 </resources>

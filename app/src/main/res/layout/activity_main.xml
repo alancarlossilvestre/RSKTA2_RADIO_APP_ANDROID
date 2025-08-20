@@ -14,15 +14,15 @@
     <!-- PARTE SUPERIOR: Layout con botón de reproducción -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#3F51B5"
+
         android:elevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Rskt2"
+        app:title="Rskt2 Radio FM"
         app:titleTextColor="@android:color/white">
 
         <!-- Icono a la derecha del toolbar -->
@@ -44,7 +44,7 @@
     <LinearLayout
         android:id="@+id/layoutReproducir"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="250dp"
         android:orientation="vertical"
         android:padding="16dp"
         android:gravity="center"
@@ -52,8 +52,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.5"
-        android:layout_margin="16dp"
-        android:background="@drawable/btn_border">
+        android:layout_margin="5dp"
+        >
 
         <!-- Indicador de carga -->
         <ProgressBar
@@ -62,6 +62,7 @@
             android:layout_height="wrap_content"
             android:visibility="gone"
             android:layout_gravity="center" />
+
 
         <TextView
             android:id="@+id/txtStatus"
@@ -87,7 +88,7 @@
         android:id="@+id/bottom_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="16dp"
+        android:layout_margin="5dp"
         app:layout_constraintTop_toBottomOf="@id/layoutReproducir"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -133,36 +134,7 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/facebook_sign_in_button_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/btn_border"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:padding="12dp"
-                android:layout_marginBottom="8dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/facebook"
-                    android:contentDescription="Facebook logo" />
-
-                <Space
-                    android:layout_width="10dp"
-                    android:layout_height="1dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Continuar con Facebook"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
-            </LinearLayout>
 
         </LinearLayout>
 

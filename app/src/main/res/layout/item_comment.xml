@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:padding="3dp"
+    android:layout_margin="3dp"
+    >
 
     <!-- Foto de perfil -->
     <ImageView
@@ -25,7 +27,9 @@
         android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_profile"
-        app:layout_constraintTop_toTopOf="@id/iv_profile">
+        app:layout_constraintTop_toTopOf="@id/iv_profile"
+
+        android:background="#80344454">
 
         <!-- Nombre del usuario -->
         <TextView
@@ -52,6 +56,7 @@
             app:layout_constraintTop_toTopOf="@id/tv_username" />
 
         <!-- Contenido del comentario -->
+
         <TextView
             android:id="@+id/tv_comment"
             android:layout_width="0dp"
@@ -63,6 +68,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_username" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
