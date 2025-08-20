@@ -2,4 +2,6 @@
     <dimen name="app_bar_height">380dp</dimen>
     <dimen name="fab_margin">40dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <!-- En res/values/dimens.xml -->
+    <dimen name="status_bar_height">24dp</dimen>
 </resources>

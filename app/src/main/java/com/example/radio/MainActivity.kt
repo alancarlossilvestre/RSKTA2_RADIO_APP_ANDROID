@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity(), MainView{
 
         //cerrar sesion
         val loginButton = findViewById<LinearLayout>(R.id.google_sign_in_button_id)
-        val logoutButton = findViewById<Button>(R.id.btnLogout)
+        val logoutButton = findViewById<ImageView>(R.id.btnLogout)
 
 
 
@@ -88,6 +88,7 @@ class MainActivity : AppCompatActivity(), MainView{
     }
 
     override fun showLoginSuccess() {
+
         Toast.makeText(this, "Inicio de sesion exitoso", Toast.LENGTH_SHORT).show()
     }
 
@@ -125,11 +126,11 @@ class MainActivity : AppCompatActivity(), MainView{
     }
 
     override fun showLogoutButton() {
-        findViewById<Button>(R.id.btnLogout).visibility = View.VISIBLE
+        findViewById<ImageView>(R.id.btnLogout).visibility = View.VISIBLE
     }
 
     override fun hideLogoutButton() {
-        findViewById<Button>(R.id.btnLogout).visibility = View.GONE
+        findViewById<ImageView>(R.id.btnLogout).visibility = View.GONE
     }
 
     override fun removeCommentsFragment() {

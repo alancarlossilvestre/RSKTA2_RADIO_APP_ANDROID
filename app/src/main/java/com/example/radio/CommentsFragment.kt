@@ -2,6 +2,7 @@ package com.example.radio
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +29,7 @@ import com.squareup.picasso.Picasso
 import org.w3c.dom.Comment
 
 class CommentsFragment : Fragment() {
+    private lateinit var ic_my_profile: ImageView
     private lateinit var etComment: EditText
     private lateinit var ibSend: ImageButton
     private lateinit var rvComments: RecyclerView
@@ -62,6 +64,20 @@ class CommentsFragment : Fragment() {
                 etComment.text.clear()
             }
         }
+        //cargo imagen de perfil
+        firebaseUser?.photoUrl?.let { photoUrl ->
+            Log.d("Perfil Debug", "cargando iamgen desde URL:  $photoUrl")
+            Picasso.get()
+                .load(photoUrl)
+                .placeholder(R.drawable.ic_default_profile)
+                .error(R.drawable.ic_default_profile)
+                .transform(CircleTransform())
+                .into(ic_my_profile)
+        } ?: run {
+            Log.d("DEBUG", "No hay URL de foto, usando imagen por defecto")
+            // If no photo URL, set a default image
+            ic_my_profile.setImageResource(R.drawable.ic_default_profile)
+        }
 
         return view
     }
@@ -72,6 +88,7 @@ class CommentsFragment : Fragment() {
         rvComments = view.findViewById(R.id.rv_comments)
         progressBar = view.findViewById(R.id.progressBar)
         tvEmptyState = view.findViewById(R.id.tv_empty_state)
+        ic_my_profile = view.findViewById(R.id.ib_attach)
     }
 
     private fun setupRecyclerView() {

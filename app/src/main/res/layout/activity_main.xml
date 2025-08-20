@@ -2,33 +2,66 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient"
-    android:padding="16dp">
+    android:paddingTop="@dimen/status_bar_height"
+    >
+
+    <!-- Toolbar at the top - Sin padding para ocupar todo el ancho -->
 
     <!-- PARTE SUPERIOR: Layout con botón de reproducción -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#3F51B5"
+        android:elevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Rskt2"
+        app:titleTextColor="@android:color/white">
+
+        <!-- Icono a la derecha del toolbar -->
+        <ImageView
+            android:id="@+id/btnLogout"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="4dp"
+            android:src="@drawable/outline"
+            android:visibility="gone" />
+
+    </androidx.appcompat.widget.Toolbar>
+
     <LinearLayout
         android:id="@+id/layoutReproducir"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
         android:padding="16dp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.5"
+        android:layout_margin="16dp"
         android:background="@drawable/btn_border">
+
         <!-- Indicador de carga -->
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_gravity="center" />
 
         <TextView
             android:id="@+id/txtStatus"
@@ -41,10 +74,12 @@
             android:gravity="center" />
 
         <Button
+            
             android:id="@+id/btnPlayStream"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Reproducir" />
+
     </LinearLayout>
 
     <!-- PARTE INFERIOR: Contenedor dinámico -->
@@ -52,19 +87,20 @@
         android:id="@+id/bottom_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_margin="16dp"
         app:layout_constraintTop_toBottomOf="@id/layoutReproducir"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Contenedor para botones de login/logout -->
+        <!-- Contenedor para botones de login/logout - Centrado -->
         <LinearLayout
             android:id="@+id/login_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp"
-            android:layout_margin="10dp">
+            android:layout_gravity="center">
 
             <LinearLayout
                 android:id="@+id/google_sign_in_button_id"
@@ -76,7 +112,8 @@
                 android:padding="12dp"
                 android:layout_marginBottom="8dp"
                 android:clickable="true"
-                android:focusable="true">
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
 
                 <ImageView
                     android:layout_width="24dp"
@@ -106,7 +143,8 @@
                 android:padding="12dp"
                 android:layout_marginBottom="8dp"
                 android:clickable="true"
-                android:focusable="true">
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
 
                 <ImageView
                     android:layout_width="24dp"
@@ -126,12 +164,6 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btnLogout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Cerrar sesión"
-                android:visibility="gone" />
         </LinearLayout>
 
         <!-- Contenedor para CommentsFragment -->
