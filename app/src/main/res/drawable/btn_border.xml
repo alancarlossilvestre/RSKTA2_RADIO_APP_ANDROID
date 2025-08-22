@@ -9,8 +9,8 @@
             <solid android:color="@android:color/transparent" />
 
             <stroke
-                android:width="0.5dp"
-                android:color="#000000" /> <!-- Cambia a tu color deseado -->
+                android:width="0.7dp"
+                android:color="#F2F2F2" /> <!-- Cambia a tu color deseado -->
 
             <corners android:radius="20dp" />
 

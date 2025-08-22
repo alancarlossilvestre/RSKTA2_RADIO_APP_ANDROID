@@ -24,12 +24,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:background="@drawable/bg_comment_content"
         android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/iv_profile"
-        app:layout_constraintTop_toTopOf="@id/iv_profile"
+        app:layout_constraintHorizontal_bias="0.0"
 
-        android:background="#80344454">
+        app:layout_constraintStart_toEndOf="@id/iv_profile"
+        app:layout_constraintTop_toTopOf="@id/iv_profile">
 
         <!-- Nombre del usuario -->
         <TextView

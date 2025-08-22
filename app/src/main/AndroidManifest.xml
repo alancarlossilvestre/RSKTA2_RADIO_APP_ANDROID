@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:allowBackup="true"
@@ -19,11 +22,10 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="Rskt2"
-            android:theme="@style/Theme.Radio.NoActionBar" >
+            android:label="RSKTA2"
+            android:theme="@style/Theme.Radio.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -31,7 +33,16 @@
             android:name=".ScrollingActivity"
             android:exported="false"
             android:theme="@style/Theme.Radio"/>
-
+        <service
+            android:name=".model.StreamingService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback">
+            <intent-filter>
+                <action android:name="androidx.media3.session.MediaSessionService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.attribution"
+                android:value="StreamingServiceAttribution" />
+        </service>
     </application>
-
 </manifest>

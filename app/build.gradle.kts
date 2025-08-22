@@ -62,6 +62,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.firebase.database.ktx)
+    implementation(libs.androidx.media3.session)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -74,6 +75,9 @@ dependencies {
     implementation ("androidx.media3:media3-ui:1.7.1")
     implementation ("androidx.media3:media3-exoplayer:1.7.1")
     implementation ("androidx.media3:media3-exoplayer:1.7.1")
+    implementation ("androidx.core:core:1.13.1")  // Para NotificationCompat
+    implementation ("androidx.media:media:1.7.0")
+    implementation ("androidx.media3:media3-session:1.7.1")
 
     //implementaicon de firebase
     // Import the BoM for the Firebase platform
@@ -95,5 +99,7 @@ dependencies {
     implementation ("com.airbnb.android:lottie:3.4.0")
     // carga de imagenes exteriores con piccaso
     implementation("com.squareup.picasso:picasso:2.8")
+
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 
 }

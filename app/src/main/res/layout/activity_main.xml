@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_gradient"
+    android:background="@mipmap/fondo"
     android:paddingTop="@dimen/status_bar_height"
     >
 
@@ -16,14 +16,12 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-
         android:elevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Rskt2 Radio FM"
-        app:titleTextColor="@android:color/white">
+        app:titleTextColor="#F2F2F2">
 
         <!-- Icono a la derecha del toolbar -->
         <ImageView
@@ -46,7 +44,7 @@
         android:layout_width="0dp"
         android:layout_height="250dp"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:padding="10dp"
         android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,6 +62,7 @@
             android:layout_gravity="center" />
 
 
+
         <TextView
             android:id="@+id/txtStatus"
             android:layout_width="match_parent"
@@ -75,7 +74,6 @@
             android:gravity="center" />
 
         <Button
-            
             android:id="@+id/btnPlayStream"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,7 +90,8 @@
         app:layout_constraintTop_toBottomOf="@id/layoutReproducir"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        >
 
         <!-- Contenedor para botones de login/logout - Centrado -->
         <LinearLayout
@@ -110,15 +109,15 @@
                 android:background="@drawable/btn_border"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:padding="12dp"
+                android:padding="10dp"
                 android:layout_marginBottom="8dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground">
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
                     android:src="@drawable/google"
                     android:contentDescription="Google logo" />
 
@@ -130,8 +129,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Continuar con Google"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                    android:textColor="#F2F2F2"
+                    android:textSize="17sp" />
             </LinearLayout>
 
 
@@ -143,7 +142,7 @@
             android:id="@+id/comments_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#EFEFEF"
+            android:background="@android:color/transparent"
             android:visibility="gone" />
 
     </FrameLayout>

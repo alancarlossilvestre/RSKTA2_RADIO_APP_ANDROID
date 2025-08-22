@@ -1,15 +1,17 @@
 package com.example.radio
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 
 import com.example.radio.presenter.MainPresenter
 import com.example.radio.view.MainView
-import com.example.radio.R
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity(), MainView{
@@ -25,6 +27,10 @@ class MainActivity : AppCompatActivity(), MainView{
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+            requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+        }
 
         //verifica el inicio de sesion
 
@@ -153,6 +159,17 @@ class MainActivity : AppCompatActivity(), MainView{
 
     override fun hideLoading() {
         progressBar.visibility = View.GONE
+    }
+    // Launcher para permisos
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (!isGranted) {
+            Log.e("MainActivity", "Permiso POST_NOTIFICATIONS no concedido")
+            Toast.makeText(this, "Se requieren permisos de notificación para el streaming", Toast.LENGTH_LONG).show()
+        } else {
+            Log.d("MainActivity", "Permiso POST_NOTIFICATIONS concedido")
+        }
     }
 
 
