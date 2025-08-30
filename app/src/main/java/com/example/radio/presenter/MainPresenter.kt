@@ -72,7 +72,7 @@ class MainPresenter(private val context: Context, private val view: MainView){
         context.startService(intent)
         isPlaying = true
         view.showStatusMessage("Reproduciendo...")
-        view.updatePlayButton("Detener")
+        view.updatePlayButton(true)   // ✅ ahora recibe Boolean
     }
 
     private fun stopPlayback() {
@@ -82,7 +82,7 @@ class MainPresenter(private val context: Context, private val view: MainView){
         context.startService(intent)
         isPlaying = false
         view.showStatusMessage("Reproducción detenida")
-        view.updatePlayButton("Reproducir")
+        view.updatePlayButton(false)
     }
 
     fun releasePlayer() {

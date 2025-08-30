@@ -4,10 +4,13 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 
 import androidx.appcompat.app.AppCompatActivity
+import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieDrawable
 import com.bumptech.glide.Glide
 
 import com.example.radio.presenter.MainPresenter
@@ -16,21 +19,24 @@ import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity(), MainView{
 
-    private lateinit var btnPlay: Button
+    private lateinit var btnPlay: ImageView
     private lateinit var txtStatus: TextView
     private lateinit var presenter: MainPresenter
     private lateinit var progressBar: ProgressBar
 
     private lateinit var googlebtn: LinearLayout
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_main)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
             requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
         }
+
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
         //verifica el inicio de sesion
 
@@ -85,8 +91,30 @@ class MainActivity : AppCompatActivity(), MainView{
         presenter.releasePlayer()
     }
 
-    override fun updatePlayButton(text: String) {
-        btnPlay.text = text
+    override fun updatePlayButton(isPlaying: Boolean) {
+        val btnPlayStream = findViewById<ImageButton>(R.id.btnPlayStream)
+        val discoAnimation = findViewById<LottieAnimationView>(R.id.disco_animation)
+        val barraAudio = findViewById<LottieAnimationView>(R.id.barraAudio)
+
+        if (isPlaying) {
+            // Cambia a icono de pausa
+            btnPlayStream.setImageResource(android.R.drawable.ic_media_pause)
+
+            // Reproduce en loop los Lottie
+            discoAnimation.repeatCount = LottieDrawable.INFINITE
+            discoAnimation.playAnimation()
+
+            barraAudio.repeatCount = LottieDrawable.INFINITE
+            barraAudio.playAnimation()
+
+        } else {
+            // Cambia a icono de play
+            btnPlayStream.setImageResource(android.R.drawable.ic_media_play)
+
+            // Pausa los Lottie
+            discoAnimation.pauseAnimation()
+            barraAudio.pauseAnimation()
+        }
     }
 
     override fun showStatusMessage(message: String) {
@@ -107,6 +135,7 @@ class MainActivity : AppCompatActivity(), MainView{
 
         val container = findViewById<FrameLayout>(R.id.comments_fragment)
         container.visibility = View.VISIBLE
+
 
 
         val transaction = supportFragmentManager.beginTransaction()

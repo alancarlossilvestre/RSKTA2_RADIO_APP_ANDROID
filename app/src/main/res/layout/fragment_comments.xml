@@ -13,12 +13,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Mensaje para estado vacío -->
+    <!-- Mensaje de estado vacío -->
     <TextView
         android:id="@+id/tv_empty_state"
         android:layout_width="wrap_content"
@@ -27,14 +27,12 @@
         android:textSize="16sp"
         android:textColor="?android:attr/textColorSecondary"
         android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- RecyclerView para los comentarios -->
-
-    <!-- Contenedor para el campo de entrada -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_comments"
         android:layout_width="0dp"
@@ -42,14 +40,13 @@
         android:clipToPadding="false"
         android:paddingBottom="5dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/cl_input_container"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        />
+        app:layout_constraintBottom_toTopOf="@id/cl_input_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fitsSystemWindows="true"/>
 
+    <!-- Contenedor para el input -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_input_container"
         android:layout_width="0dp"
@@ -57,9 +54,8 @@
         android:elevation="4dp"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        >
+        app:layout_constraintEnd_toEndOf="parent">
 
         <!-- Botón para adjuntar -->
         <ImageButton
@@ -68,46 +64,49 @@
             android:layout_height="40dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:contentDescription="Adjuntar archivo"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-        <!-- Campo de texto para el comentario -->
+        <!-- Campo de texto para comentario -->
         <EditText
             android:id="@+id/et_comment"
             android:layout_width="0dp"
             android:layout_height="35dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:hint="comentar..."
+            android:background="@drawable/btn_border"
+            android:hint="Comentar..."
             android:imeOptions="actionSend"
             android:inputType="textMultiLine|textCapSentences"
             android:maxLines="4"
             android:minLines="1"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ib_send"
-            app:layout_constraintStart_toEndOf="@id/ib_attach"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/btn_border"
             android:paddingStart="10dp"
             android:paddingEnd="5dp"
             android:paddingBottom="5dp"
+            android:textColor="#ffffff"
+            android:textColorHint="#f2f2f2"
+            android:textSize="15sp"
+            android:scrollbars="vertical"
+            android:overScrollMode="always"
+            app:layout_constraintStart_toEndOf="@id/ib_attach"
+            app:layout_constraintEnd_toStartOf="@id/ib_send"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-            />
-
-        <!-- Botón para enviar -->
+        <!-- Botón enviar -->
         <ImageButton
             android:id="@+id/ib_send"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/send"
+            android:layout_width="25dp"
+            android:layout_height="30dp"
+            android:src="@mipmap/icon_enviar"
+            android:scaleType="fitCenter"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:contentDescription="Enviar comentario"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:clickable="true"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

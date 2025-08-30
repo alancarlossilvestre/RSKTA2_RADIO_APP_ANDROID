@@ -54,6 +54,13 @@ class CommentsFragment : Fragment() {
         setupRecyclerView()
         loadComments()
         firebaseUser = FirebaseAuth.getInstance().currentUser
+        etComment.setOnFocusChangeListener {_, hasFocus ->
+            if (hasFocus){
+                rvComments.post{
+                    rvComments.scrollToPosition(commentsAdapter.itemCount - 1)
+                }
+            }
+        }
 
         ibSend.setOnClickListener {
             val message = etComment.text.toString().trim()

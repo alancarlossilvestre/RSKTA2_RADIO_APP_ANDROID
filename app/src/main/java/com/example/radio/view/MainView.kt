@@ -1,7 +1,7 @@
 package com.example.radio.view
 
 interface MainView{
-    fun updatePlayButton(text: String)
+    fun updatePlayButton(isPlaying: Boolean)
     fun showStatusMessage(message: String)
     fun showLoginSuccess()
     fun showLoginError(message: String)

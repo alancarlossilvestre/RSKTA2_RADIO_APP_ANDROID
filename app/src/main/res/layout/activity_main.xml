@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:background="@mipmap/fondo"
     android:paddingTop="@dimen/status_bar_height"
+    android:fitsSystemWindows="true"
     >
 
     <!-- Toolbar at the top - Sin padding para ocupar todo el ancho -->
@@ -21,63 +22,126 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="#F2F2F2">
+        app:titleTextColor="#F2F2F2"
+        >
 
         <!-- Icono a la derecha del toolbar -->
         <ImageView
             android:id="@+id/btnLogout"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="end"
             android:layout_marginEnd="16dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:focusable="true"
             android:padding="4dp"
-            android:src="@drawable/outline"
+            android:src="@mipmap/logout"
             android:visibility="gone" />
+        <ImageView
+            android:id="@+id/btnmenu"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="4dp"
+            android:src="@mipmap/icon_menu"
+            />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RSKTA2 RADIO "
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:fontFamily="@font/comic"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ONLINE"
+            android:textColor="#E91919"
+            android:textSize="20sp"
+            android:fontFamily="@font/comic"
+            android:textStyle="bold"
+
+            />
     </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:id="@+id/layoutReproducir"
-        android:layout_width="0dp"
-        android:layout_height="250dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp"
+        android:padding="5dp"
         android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.5"
-        android:layout_margin="5dp"
-        >
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Indicador de carga -->
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_gravity="center" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/disco_animation"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:scaleType="fitXY"
+            android:layout_marginBottom="5dp"
+            app:lottie_rawRes="@raw/spaceman"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"/>
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/barraAudio"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:lottie_rawRes="@raw/barra_gif_v2"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:scaleType="fitXY"
+            android:layout_marginBottom="5dp"/>
 
-
-        <TextView
-            android:id="@+id/txtStatus"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Presiona Reproducir"
-            android:textSize="20sp"
-            android:textColor="#000000"
-            android:layout_marginBottom="16dp"
-            android:gravity="center" />
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="8dp">
 
-        <Button
-            android:id="@+id/btnPlayStream"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Reproducir" />
+            <LinearLayout
+                android:id="@+id/barra_buton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_comment_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="10dp"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:layout_marginEnd="8dp">
+
+                <ImageButton
+                    android:id="@+id/btnPlayStream"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="@null"
+                    android:src="@android:drawable/ic_media_play"
+                    android:contentDescription="Play/Pause" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reproducir"
+                android:textSize="20sp"
+                android:textColor="#FFFFFF"
+                android:gravity="center" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -91,12 +155,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:fitsSystemWindows="true"
         >
+
 
         <!-- Contenedor para botones de login/logout - Centrado -->
         <LinearLayout
             android:id="@+id/login_container"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp"
@@ -106,13 +172,14 @@
                 android:id="@+id/google_sign_in_button_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/btn_border"
+                android:background="@drawable/bg_comment_content"
                 android:orientation="horizontal"
                 android:gravity="center"
                 android:padding="10dp"
                 android:layout_marginBottom="8dp"
                 android:clickable="true"
                 android:focusable="true"
+
                 android:foreground="?attr/selectableItemBackground">
 
                 <ImageView
@@ -130,7 +197,9 @@
                     android:layout_height="wrap_content"
                     android:text="Continuar con Google"
                     android:textColor="#F2F2F2"
-                    android:textSize="17sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    />
             </LinearLayout>
 
 
@@ -146,5 +215,15 @@
             android:visibility="gone" />
 
     </FrameLayout>
+
+    <!-- Indicador de carga -->
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

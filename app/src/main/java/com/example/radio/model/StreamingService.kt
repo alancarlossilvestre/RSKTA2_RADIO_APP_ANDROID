@@ -26,7 +26,7 @@ class StreamingService : Service(), AudioManager.OnAudioFocusChangeListener {
 
     private lateinit var exoPlayer: ExoPlayer
     private var isPlaying = false
-    private val streamUrl = "https://stream.zeno.fm/kfgt3srascitv"
+    private val streamUrl = "https://stream.zeno.fm/udlikfdjnwgtv"
     private val CHANNEL_ID = "StreamingServiceChannel"
     private val NOTIFICATION_ID = 1
     private val TAG = "StreamingService"
@@ -130,7 +130,7 @@ class StreamingService : Service(), AudioManager.OnAudioFocusChangeListener {
             } catch (e: Exception) {
                 Log.e(TAG, "Error al detener el servicio después de 15 minutos", e)
             }
-        }, 5 * 60 * 1000L)
+        }, 3 * 60 * 1000L)
         Log.d(TAG, "Programada detención del servicio en 15 minutos")
         // Abandonar foco de audio
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -203,9 +203,9 @@ class StreamingService : Service(), AudioManager.OnAudioFocusChangeListener {
         )
 
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("Radio Streaming")
+            .setContentTitle("RSKTA2 Radio Online")
             .setContentText(status)
-            .setSmallIcon(android.R.drawable.ic_media_play)
+            .setSmallIcon(android.R.drawable.ic_notification_overlay)
             .setContentIntent(pendingIntent)
             .setOngoing(true)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
