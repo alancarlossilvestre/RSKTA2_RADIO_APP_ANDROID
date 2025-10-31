@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="3dp"
-    android:layout_margin="3dp"
+    android:padding="5dp"
+    android:layout_margin="1dp"
     >
 
     <!-- Foto de perfil -->
@@ -24,11 +24,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:background="@drawable/bg_comment_content"
+        android:background="@drawable/back_comment_content"
         android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-
         app:layout_constraintStart_toEndOf="@id/iv_profile"
         app:layout_constraintTop_toTopOf="@id/iv_profile">
 
@@ -38,8 +37,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nombre de usuario"
-            android:textColor="?android:attr/textColorPrimary"
             android:textSize="14sp"
+            android:layout_marginLeft="5dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -49,9 +48,8 @@
             android:id="@+id/tv_timestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="5dp"
             android:text="hace 5 minutos"
-            android:textColor="?android:attr/textColorSecondary"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@id/tv_username"
             app:layout_constraintTop_toTopOf="@id/tv_username" />
@@ -63,8 +61,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:layout_marginLeft="5dp"
             android:text="Este es un comentario de ejemplo."
-            android:textColor="?android:attr/textColorPrimary"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

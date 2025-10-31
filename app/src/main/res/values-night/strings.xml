@@ -94,6 +94,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+
     <string name="titleToolbar">Radio online</string>
     <string name="icono_de_menu">icono de menu en la parte superior izquierdo</string>
     <string name="icono_de_live">icono de live al lado izquiero del titulo del toolbar</string>

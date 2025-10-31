@@ -2,9 +2,10 @@
 <resources>
 
     <style name="Theme.Radio" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/primaryColor</item>
-        <item name="android:colorBackground">@color/ActivityColor</item>
-        <item name="android:textColor">@color/textToolbar</item>
+        <item name="colorPrimary">@color/primaryColorN</item>
+        <item name="android:colorBackground">@color/ActivityColorN</item>
+        <item name="android:textColor">@color/textToolbarN</item>
+
     </style>
 
     <style name="Theme.Radio.NoActionBar">
@@ -16,6 +17,3 @@
 
     <style name="Theme.Radio.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
-
-
-

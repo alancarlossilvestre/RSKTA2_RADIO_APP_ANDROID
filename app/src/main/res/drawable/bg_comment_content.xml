@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
 
-    <!-- Color de fondo con transparencia (#30344454) -->
-    <solid android:color="#94F2F2F2"/>
-
-    <!-- Esquinas redondeadas -->
-    <corners android:radius="12dp"/>
-
-    <!-- (Opcional) Padding interno -->
-    <padding
-        android:left="8dp"
-        android:top="8dp"
-        android:right="8dp"
-        android:bottom="8dp"/>
-</shape>
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="312dp"
+    android:height="56dp"
+    android:viewportWidth="312"
+    android:viewportHeight="56"
+    >
+    <group>
+        <clip-path
+            android:pathData="M25 0H287C300.807 0 312 11.1929 312 25V31C312 44.8071 300.807 56 287 56H25C11.1929 56 0 44.8071 0 31V25C0 11.1929 11.1929 0 25 0Z"
+            />
+        <path
+            android:pathData="M0 0V56H312V0"
+            android:fillColor="#800C297E"
+            />
+        <path
+            android:pathData="M25 0H287C300.807 0 312 11.1929 312 25V31C312 44.8071 300.807 56 287 56H25C11.1929 56 0 44.8071 0 31V25C0 11.1929 11.1929 0 25 0Z"
+            android:strokeWidth="2"
+            android:strokeColor="#3DFFFFFF"
+            />
+    </group>
+</vector>

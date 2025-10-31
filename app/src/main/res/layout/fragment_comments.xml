@@ -4,8 +4,61 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
-    android:background="@android:color/transparent">
+    android:padding="15dp">
+
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_chat"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:background="?attr/colorPrimary"
+            android:elevation="6dp"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/btnmenu"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    app:lottie_rawRes="@raw/live_animate"
+                    android:layout_alignParentLeft="true"
+                    app:lottie_autoPlay="true"
+                    android:layout_centerInParent="true"
+                    app:lottie_loop="true"
+                    android:scaleType="fitXY" />
+
+
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="@string/chat_live"
+                    android:textSize="12sp"
+                    android:paddingTop="2dp"
+                    android:fontFamily="@font/poppins"/>
+
+                <ImageView
+                    android:id="@+id/icono_compartir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:contentDescription="@string/icono_de_compartir"
+                    android:src="@drawable/icon_share" />
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
 
     <!-- Indicador de carga -->
     <ProgressBar
@@ -25,8 +78,7 @@
         android:layout_height="wrap_content"
         android:text="Aún no hay comentarios"
         android:textSize="16sp"
-        android:textColor="?android:attr/textColorSecondary"
-        android:visibility="gone"
+        android:textColor="#000000"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,24 +87,24 @@
     <!-- RecyclerView para los comentarios -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_comments"
+        android:background="?attr/colorPrimary"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:clipToPadding="false"
         android:paddingBottom="5dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_chat"
         app:layout_constraintBottom_toTopOf="@id/cl_input_container"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:fitsSystemWindows="true"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <!-- Contenedor para el input -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_input_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:elevation="4dp"
+        android:elevation="10dp"
         android:padding="8dp"
+        android:background="?attr/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -84,8 +136,6 @@
             android:paddingStart="10dp"
             android:paddingEnd="5dp"
             android:paddingBottom="5dp"
-            android:textColor="#ffffff"
-            android:textColorHint="#f2f2f2"
             android:textSize="15sp"
             android:scrollbars="vertical"
             android:overScrollMode="always"

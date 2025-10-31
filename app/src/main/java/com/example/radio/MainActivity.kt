@@ -11,7 +11,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
-import com.bumptech.glide.Glide
 
 import com.example.radio.presenter.MainPresenter
 import com.example.radio.view.MainView
@@ -25,6 +24,10 @@ class MainActivity : AppCompatActivity(), MainView{
     private lateinit var progressBar: ProgressBar
 
     private lateinit var googlebtn: LinearLayout
+
+    private lateinit var menu: ImageButton
+
+    private lateinit var back_menu: ImageButton
 
 
 
@@ -75,6 +78,18 @@ class MainActivity : AppCompatActivity(), MainView{
 
         progressBar = findViewById(R.id.progressBar)
 
+        menu = findViewById(R.id.btnmenu)
+
+        menu.setOnClickListener {
+            openMenuFragment()
+        }
+
+        back_menu = findViewById(R.id.back_menu)
+
+        back_menu.setOnClickListener {
+            back_activityMain()
+        }
+
         btnPlay.setOnClickListener {
             presenter.togglePlayback()
         }
@@ -93,16 +108,13 @@ class MainActivity : AppCompatActivity(), MainView{
 
     override fun updatePlayButton(isPlaying: Boolean) {
         val btnPlayStream = findViewById<ImageButton>(R.id.btnPlayStream)
-        val discoAnimation = findViewById<LottieAnimationView>(R.id.disco_animation)
+
         val barraAudio = findViewById<LottieAnimationView>(R.id.barraAudio)
 
         if (isPlaying) {
             // Cambia a icono de pausa
             btnPlayStream.setImageResource(android.R.drawable.ic_media_pause)
 
-            // Reproduce en loop los Lottie
-            discoAnimation.repeatCount = LottieDrawable.INFINITE
-            discoAnimation.playAnimation()
 
             barraAudio.repeatCount = LottieDrawable.INFINITE
             barraAudio.playAnimation()
@@ -110,9 +122,6 @@ class MainActivity : AppCompatActivity(), MainView{
         } else {
             // Cambia a icono de play
             btnPlayStream.setImageResource(android.R.drawable.ic_media_play)
-
-            // Pausa los Lottie
-            discoAnimation.pauseAnimation()
             barraAudio.pauseAnimation()
         }
     }
@@ -135,8 +144,6 @@ class MainActivity : AppCompatActivity(), MainView{
 
         val container = findViewById<FrameLayout>(R.id.comments_fragment)
         container.visibility = View.VISIBLE
-
-
 
         val transaction = supportFragmentManager.beginTransaction()
         //animacion
@@ -161,7 +168,7 @@ class MainActivity : AppCompatActivity(), MainView{
     }
 
     override fun showLogoutButton() {
-        findViewById<ImageView>(R.id.btnLogout).visibility = View.VISIBLE
+        //findViewById<ImageView>(R.id.btnLogout).visibility = View.VISIBLE
     }
 
     override fun hideLogoutButton() {
@@ -201,5 +208,42 @@ class MainActivity : AppCompatActivity(), MainView{
         }
     }
 
+    private fun openMenuFragment() {
+        val transaction = supportFragmentManager.beginTransaction()
 
+        // Animaciones opcionales (fade in/out)
+        transaction.setCustomAnimations(
+            android.R.anim.fade_in,
+            android.R.anim.fade_out,
+            android.R.anim.fade_in,
+            android.R.anim.fade_out
+        )
+
+        // Reemplaza el contenedor donde se mostrará el fragmento
+        transaction.replace(R.id.fragment_menu, MenuFragment())
+
+        // Opcional: agrega a la pila para poder volver con el botón "atrás"
+        transaction.addToBackStack(null)
+
+        // Ejecuta la transacción
+        transaction.commit()
+        menu.visibility = View.GONE
+        findViewById<ImageButton>(R.id.back_menu).visibility = View.VISIBLE
+        findViewById<View>(R.id.fragment_menu).visibility = View.VISIBLE
+
+    }
+
+    private fun back_activityMain(){
+        // Oculta el contenedor del menú
+        findViewById<View>(R.id.fragment_menu).visibility = View.GONE
+
+        // Oculta el botón de volver
+        back_menu.visibility = View.GONE
+
+        // Vuelve a mostrar el botón/menu original
+        menu.visibility = View.VISIBLE
+
+        // Remueve el fragment del FragmentManager si quieres limpiar la pila
+        supportFragmentManager.popBackStack()
+    }
 }
