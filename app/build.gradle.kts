@@ -49,6 +49,18 @@ android {
     }
 }
 
+configurations.all {
+    resolutionStrategy {
+        force("io.netty:netty-codec:4.2.5.Final")
+        force("io.netty:netty-handler:4.2.5.Final")
+        force("io.netty:netty-transport:4.2.5.Final")
+        force("io.netty:netty-buffer:4.2.5.Final")
+        force("io.netty:netty-common:4.2.5.Final")
+        force("io.netty:netty-codec-http:4.1.125.Final")
+        force("io.netty:netty-codec-http2:4.2.5.Final")
+    }
+}
+
 dependencies {
 
     implementation(libs.androidx.core.ktx)

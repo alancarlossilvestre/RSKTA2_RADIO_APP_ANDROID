@@ -9,6 +9,7 @@ import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.core.animate
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 
@@ -104,6 +105,12 @@ class MainActivity : AppCompatActivity(), MainView{
         }
 
         presenter.initializePlayer()
+
+        val programsFragment = ProgramsFragment.newInstance("", "")
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.programs_fragment, programsFragment)
+            .commit()
+
     }
 
     override fun onDestroy() {
@@ -214,9 +221,7 @@ class MainActivity : AppCompatActivity(), MainView{
         // Animaciones opcionales (fade in/out)
         transaction.setCustomAnimations(
             android.R.anim.fade_in,
-            android.R.anim.fade_out,
-            android.R.anim.fade_in,
-            android.R.anim.fade_out
+            android.R.anim.fade_in
         )
 
         // Reemplaza el contenedor donde se mostrará el fragmento
@@ -235,8 +240,13 @@ class MainActivity : AppCompatActivity(), MainView{
 
     fun back_activityMain(){
         // Oculta el contenedor del menú
-        findViewById<View>(R.id.fragment_menu).visibility = View.GONE
+        val transaction = supportFragmentManager.beginTransaction()
 
+        // Animaciones opcionales (fade in/out)
+        transaction.setCustomAnimations(
+            android.R.anim.fade_out,
+            android.R.anim.fade_out
+        )
         // Oculta el botón de volver
         back_menu.visibility = View.GONE
 
@@ -246,4 +256,6 @@ class MainActivity : AppCompatActivity(), MainView{
         // Remueve el fragment del FragmentManager si quieres limpiar la pila
         supportFragmentManager.popBackStack()
     }
+
+
 }

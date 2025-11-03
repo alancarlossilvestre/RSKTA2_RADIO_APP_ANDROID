@@ -31,6 +31,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/fondo_animado"
         android:layout_width="match_parent"
@@ -39,7 +41,9 @@
         app:lottie_rawRes="@raw/fondo"
         app:lottie_autoPlay="true"
         app:lottie_loop="true" />
+
     </FrameLayout>
+
 
 
     <LinearLayout
@@ -102,74 +106,97 @@
 
     </LinearLayout>
 
-
-    <!-- PARTE INFERIOR: Contenedor dinámico -->
+    <!-- PARTE INFERIOR: Contenedor dinámico CON SCROLL -->
     <FrameLayout
         android:id="@+id/bottom_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="5dp"
+        android:background="?attr/android:colorBackground"
         app:layout_constraintTop_toBottomOf="@id/upper_section"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="?attr/android:colorBackground"
-        >
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <LinearLayout
-            android:id="@+id/login_container"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:layout_gravity="center">
-
-            <LinearLayout
-                android:id="@+id/google_sign_in_button_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_comment_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:padding="10dp"
-                android:layout_marginBottom="8dp"
-                android:clickable="true"
-                android:focusable="true"
-
-                android:foreground="?attr/selectableItemBackground">
-
-                <ImageView
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:src="@drawable/google"
-                    android:contentDescription="Google logo" />
-
-                <Space
-                    android:layout_width="10dp"
-                    android:layout_height="1dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Continuar con Google"
-                    android:textColor="#F2F2F2"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    />
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- Contenedor para CommentsFragment -->
-        <FrameLayout
-            android:id="@+id/comments_fragment"
+        <!-- SCROLL que envuelve todo -->
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:background="@android:color/transparent"
-            android:elevation="10dp"
-            android:visibility="gone"
-            />
+            android:fillViewport="true">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <!-- 1. LOGIN (centrado) -->
+                <LinearLayout
+                    android:id="@+id/login_container"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="12dp"
+                    android:paddingStart="20dp"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:id="@+id/google_sign_in_button_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_comment_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="12dp">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/google"
+                            android:contentDescription="Google logo" />
+
+                        <Space
+                            android:layout_width="10dp"
+                            android:layout_height="1dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Continuar con Google"
+                            android:textColor="#F2F2F2"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- 2. COMMENTS FRAGMENT -->
+                <FrameLayout
+                    android:id="@+id/comments_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="420dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@android:color/transparent"
+                    android:elevation="10dp"
+                    android:layout_marginTop="-50dp"
+                    android:visibility="gone"
+                     />
+
+                <!-- 3. PROGRAMS FRAGMENT -->
+                <FrameLayout
+                    android:id="@+id/programs_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:elevation="10dp"
+                    />
+
+            </LinearLayout>
+        </ScrollView>
     </FrameLayout>
 
     <FrameLayout
