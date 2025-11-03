@@ -7,24 +7,8 @@
     tools:context=".MenuFragment"
     android:fitsSystemWindows="true"
     android:id="@+id/fragment_menu"
-    android:background="@drawable/border_oval">
+    android:background="@drawable/fondo_menu">
 
-    <!-- Fondo animado -->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToOutline="true"
-        android:background="#000000">
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/fondo_animado"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/fondo" />
-    </FrameLayout>
 
     <!-- Contenedor principal de items -->
     <LinearLayout
@@ -114,20 +98,22 @@
         android:gravity="center">
 
         <LinearLayout
-            android:id="@+id/google_sign_in_button_id"
+            android:id="@+id/btnLogout"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_border"
             android:orientation="horizontal"
             android:gravity="center"
             android:padding="10dp"
-            android:layout_marginBottom="36dp"
+            android:layout_marginBottom="56dp"
             android:clickable="true"
             android:focusable="true"
-            android:foreground="?attr/selectableItemBackground">
+            android:visibility="gone"
+            android:foreground="?attr/selectableItemBackground"
+            tools:ignore="UselessParent">
 
             <ImageView
-                android:id="@+id/btnLogout"
+
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="?attr/selectableItemBackgroundBorderless"

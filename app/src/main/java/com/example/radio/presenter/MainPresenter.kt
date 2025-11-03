@@ -72,7 +72,7 @@ class MainPresenter(private val context: Context, private val view: MainView){
         context.startService(intent)
         isPlaying = true
         view.showStatusMessage("Reproduciendo...")
-        view.updatePlayButton(true)   // ✅ ahora recibe Boolean
+        view.updatePlayButton(true)
     }
 
     private fun stopPlayback() {
@@ -109,7 +109,6 @@ class MainPresenter(private val context: Context, private val view: MainView){
                 (context as? MainActivity)?.runOnUiThread {
                     view.showLoginSuccess()
                     view.hideLoginButton()
-                    view.showLogoutButton()
                     view.navigateToComentsFragment()
                     // Podrías redirigir a otra pantalla aquí si lo deseas
                 }
@@ -124,7 +123,6 @@ class MainPresenter(private val context: Context, private val view: MainView){
 
     fun onUserAlreadyLoggedIn() {
         view.hideLoginButton()
-        view.showLogoutButton()
         view.navigateToComentsFragment()
     }
 
@@ -133,12 +131,19 @@ class MainPresenter(private val context: Context, private val view: MainView){
         val currentUser = FirebaseAuth.getInstance().currentUser
         val name = currentUser?.displayName ?: "usuario"
         view.showGoodbyeMessage(name)
-
         FirebaseAuth.getInstance().signOut()
         view.showLoginButton()
-        view.hideLogoutButton()
         view.removeCommentsFragment()
     }
 
+    fun shareapp(){
+        val shareIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, "¡Descubre la música y mensajes que inspiran! Descarga RSKTA2 y lleva tu radio cristiana favorita siempre contigo. \uD83D\uDE4C\uD83D\uDCFB")
+        }
 
+        // Abrir el selector nativo de apps para compartir
+        context.startActivity(Intent.createChooser(shareIntent, "Compartir mediante"))
+    }
 }

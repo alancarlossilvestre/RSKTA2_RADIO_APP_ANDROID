@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="15dp">
+    app:cardCornerRadius="16dp"
+    app:cardElevation="8dp"
+    android:layout_margin="5dp"
+    android:clipToPadding="false">
 
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_chat"
             android:layout_width="0dp"
-            android:layout_height="35dp"
+            android:layout_height="42dp"
             android:background="?attr/colorPrimary"
-            android:elevation="6dp"
+            android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:layout_constraintTop_toTopOf="parent"
@@ -25,8 +31,8 @@
 
                 <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/btnmenu"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     app:lottie_rawRes="@raw/live_animate"
                     android:layout_alignParentLeft="true"
                     app:lottie_autoPlay="true"
@@ -43,19 +49,19 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="20dp"
                     android:text="@string/chat_live"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:paddingTop="2dp"
                     android:fontFamily="@font/poppins"/>
 
                 <ImageView
                     android:id="@+id/icono_compartir"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
                     android:contentDescription="@string/icono_de_compartir"
-                    android:src="@drawable/icon_share" />
+                    android:src="@drawable/btn_expandir" />
             </RelativeLayout>
 
         </androidx.appcompat.widget.Toolbar>
@@ -78,7 +84,7 @@
         android:layout_height="wrap_content"
         android:text="Aún no hay comentarios"
         android:textSize="16sp"
-        android:textColor="#000000"
+        android:textColor="?attr/textInputStyle"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,7 +96,7 @@
         android:background="?attr/colorPrimary"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:paddingBottom="5dp"
+        android:paddingBottom="2dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@id/toolbar_chat"
         app:layout_constraintBottom_toTopOf="@id/cl_input_container"
@@ -126,7 +132,6 @@
             android:layout_width="0dp"
             android:layout_height="35dp"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
             android:background="@drawable/btn_border"
             android:hint="Comentar..."
             android:imeOptions="actionSend"
@@ -141,22 +146,26 @@
             android:overScrollMode="always"
             app:layout_constraintStart_toEndOf="@id/ib_attach"
             app:layout_constraintEnd_toStartOf="@id/ib_send"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColorHint="?attr/textInputStyle"
+            android:textColor="?attr/textInputStyle"
+            />
+
 
         <!-- Botón enviar -->
-        <ImageButton
+        <ImageView
             android:id="@+id/ib_send"
-            android:layout_width="25dp"
-            android:layout_height="30dp"
-            android:src="@mipmap/icon_enviar"
-            android:scaleType="fitCenter"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:layout_width="40dp"
+            android:layout_height="35dp"
+            android:src="@drawable/btn_send"
             android:contentDescription="Enviar comentario"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@null"
+
             android:clickable="true"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

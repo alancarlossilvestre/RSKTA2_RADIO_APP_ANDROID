@@ -5,16 +5,16 @@
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="android:colorBackground">@color/ActivityColor</item>
         <item name="android:textColor">@color/textToolbar</item>
+        <item name="android:statusBarColor">#000000</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="textInputStyle">@color/textInputStyle</item>
     </style>
 
-    <style name="Theme.Radio.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
+    <style name="Theme.Radio.NoActionBar"/>
 
-    <style name="Theme.Radio.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.Radio.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="Theme.Radio.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.Radio.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 </resources>
 
 

@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#091F5F</color>
-    <color name="primaryColorN">#091F5F</color>
-    <color name="primaryColor">#FFFFFF</color>
-    <color name="ActivityColor">#F5F5F5</color>
-    <color name="ActivityColorN">#1A1F36</color>
-    <color name="textToolbar">#0C297E</color>
-    <color name="textToolbarN">#e7eaf2</color>
-
+    <color name="primaryColor">#091F5F</color>
+    <color name="ActivityColor">#1A1F36</color>
+    <color name="textToolbar">#e7eaf2</color>
+    <color name="textInputStyle">#f2f2f2</color>
 </resources>

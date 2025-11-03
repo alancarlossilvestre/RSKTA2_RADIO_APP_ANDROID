@@ -31,7 +31,7 @@ import org.w3c.dom.Comment
 class CommentsFragment : Fragment() {
     private lateinit var ic_my_profile: ImageView
     private lateinit var etComment: EditText
-    private lateinit var ibSend: ImageButton
+    private lateinit var ibSend: ImageView
     private lateinit var rvComments: RecyclerView
     private lateinit var progressBar: ProgressBar
     private lateinit var tvEmptyState: TextView

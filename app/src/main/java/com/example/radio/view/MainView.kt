@@ -8,8 +8,6 @@ interface MainView{
     fun navigateToComentsFragment()
     fun hideLoginButton()
     fun showLoginButton()
-    fun showLogoutButton()
-    fun hideLogoutButton()
     fun removeCommentsFragment()
     fun showGoodbyeMessage(name: String)
     fun showLoading()

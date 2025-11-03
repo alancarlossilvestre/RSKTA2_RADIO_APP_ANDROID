@@ -29,6 +29,8 @@ class MainActivity : AppCompatActivity(), MainView{
 
     private lateinit var back_menu: ImageButton
 
+    private lateinit var btn_share: ImageButton
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +49,6 @@ class MainActivity : AppCompatActivity(), MainView{
 
         //cerrar sesion
         val loginButton = findViewById<LinearLayout>(R.id.google_sign_in_button_id)
-        val logoutButton = findViewById<ImageView>(R.id.btnLogout)
 
 
 
@@ -55,9 +56,7 @@ class MainActivity : AppCompatActivity(), MainView{
             presenter.loginWithGoogle()
         }
 
-        logoutButton.setOnClickListener {
-            presenter.onLogoutClicked()
-        }
+
 
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser != null){
@@ -96,6 +95,12 @@ class MainActivity : AppCompatActivity(), MainView{
 
         googlebtn.setOnClickListener{
             presenter.loginWithGoogle()
+        }
+
+        btn_share = findViewById(R.id.icono_compartir)
+
+        btn_share.setOnClickListener {
+            presenter.shareapp()
         }
 
         presenter.initializePlayer()
@@ -167,13 +172,6 @@ class MainActivity : AppCompatActivity(), MainView{
 
     }
 
-    override fun showLogoutButton() {
-        //findViewById<ImageView>(R.id.btnLogout).visibility = View.VISIBLE
-    }
-
-    override fun hideLogoutButton() {
-        findViewById<ImageView>(R.id.btnLogout).visibility = View.GONE
-    }
 
     override fun removeCommentsFragment() {
         val fragment = supportFragmentManager.findFragmentById(R.id.comments_fragment)
@@ -185,7 +183,9 @@ class MainActivity : AppCompatActivity(), MainView{
         findViewById<FrameLayout>(R.id.comments_fragment).visibility = View.GONE
     }
 
+
     override fun showGoodbyeMessage(name: String) {
+        findViewById<View>(R.id.fragment_menu).visibility = View.GONE
         Toast.makeText(this, "Adiós, $name 👋", Toast.LENGTH_SHORT).show()
     }
 
@@ -233,7 +233,7 @@ class MainActivity : AppCompatActivity(), MainView{
 
     }
 
-    private fun back_activityMain(){
+    fun back_activityMain(){
         // Oculta el contenedor del menú
         findViewById<View>(R.id.fragment_menu).visibility = View.GONE
 
