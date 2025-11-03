@@ -58,6 +58,9 @@ configurations.all {
         force("io.netty:netty-common:4.2.5.Final")
         force("io.netty:netty-codec-http:4.1.125.Final")
         force("io.netty:netty-codec-http2:4.2.5.Final")
+        force("com.google.protobuf:protobuf-java:4.28.2")
+        force("com.google.protobuf:protobuf-javalite:4.28.2")
+
     }
 }
 
