@@ -23,15 +23,10 @@ class MainActivity : AppCompatActivity(), MainView{
     private lateinit var txtStatus: TextView
     private lateinit var presenter: MainPresenter
     private lateinit var progressBar: ProgressBar
-
     private lateinit var googlebtn: LinearLayout
-
     private lateinit var menu: ImageButton
-
     private lateinit var back_menu: ImageButton
-
     private lateinit var btn_share: ImageButton
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,19 +40,14 @@ class MainActivity : AppCompatActivity(), MainView{
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
         //verifica el inicio de sesion
-
         presenter = MainPresenter(this, this)
 
         //cerrar sesion
         val loginButton = findViewById<LinearLayout>(R.id.google_sign_in_button_id)
 
-
-
         loginButton.setOnClickListener {
             presenter.loginWithGoogle()
         }
-
-
 
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser != null){
@@ -179,7 +169,6 @@ class MainActivity : AppCompatActivity(), MainView{
 
     }
 
-
     override fun removeCommentsFragment() {
         val fragment = supportFragmentManager.findFragmentById(R.id.comments_fragment)
         if (fragment != null) {
@@ -189,7 +178,6 @@ class MainActivity : AppCompatActivity(), MainView{
         }
         findViewById<FrameLayout>(R.id.comments_fragment).visibility = View.GONE
     }
-
 
     override fun showGoodbyeMessage(name: String) {
         findViewById<View>(R.id.fragment_menu).visibility = View.GONE
@@ -218,44 +206,31 @@ class MainActivity : AppCompatActivity(), MainView{
     private fun openMenuFragment() {
         val transaction = supportFragmentManager.beginTransaction()
 
-        // Animaciones opcionales (fade in/out)
+        // Animaciones al abrir y al cerrar el fragment
         transaction.setCustomAnimations(
-            android.R.anim.fade_in,
-            android.R.anim.fade_in
+            android.R.anim.fade_in,   // enter
+            android.R.anim.fade_out,  // exit
+            android.R.anim.fade_in,   // popEnter -> animación al volver al fragment anterior
+            android.R.anim.fade_out   // popExit  -> animación al salir del fragment actual
         )
 
-        // Reemplaza el contenedor donde se mostrará el fragmento
         transaction.replace(R.id.fragment_menu, MenuFragment())
-
-        // Opcional: agrega a la pila para poder volver con el botón "atrás"
         transaction.addToBackStack(null)
-
-        // Ejecuta la transacción
         transaction.commit()
+
+        // Actualizar visibilidad de botones
         menu.visibility = View.GONE
         findViewById<ImageButton>(R.id.back_menu).visibility = View.VISIBLE
         findViewById<View>(R.id.fragment_menu).visibility = View.VISIBLE
-
     }
 
-    fun back_activityMain(){
-        // Oculta el contenedor del menú
-        val transaction = supportFragmentManager.beginTransaction()
-
-        // Animaciones opcionales (fade in/out)
-        transaction.setCustomAnimations(
-            android.R.anim.fade_out,
-            android.R.anim.fade_out
-        )
-        // Oculta el botón de volver
-        back_menu.visibility = View.GONE
-
-        // Vuelve a mostrar el botón/menu original
-        menu.visibility = View.VISIBLE
-
-        // Remueve el fragment del FragmentManager si quieres limpiar la pila
+    fun back_activityMain() {
+        // Solo hacemos popBackStack, la animación de salida está definida en popExit
         supportFragmentManager.popBackStack()
-    }
 
+        // Actualizamos visibilidad de botones
+        back_menu.visibility = View.GONE
+        menu.visibility = View.VISIBLE
+    }
 
 }

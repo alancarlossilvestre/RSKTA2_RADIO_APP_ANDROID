@@ -31,8 +31,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-
-
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/fondo_animado"
         android:layout_width="match_parent"
@@ -111,7 +109,6 @@
         android:id="@+id/bottom_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="5dp"
         android:background="?attr/android:colorBackground"
         app:layout_constraintTop_toBottomOf="@id/upper_section"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -120,6 +117,7 @@
 
         <!-- SCROLL que envuelve todo -->
         <ScrollView
+            android:id="@+id/scrollMain"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
@@ -178,13 +176,11 @@
                 <FrameLayout
                     android:id="@+id/comments_fragment"
                     android:layout_width="match_parent"
-                    android:layout_height="420dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@android:color/transparent"
-                    android:elevation="10dp"
-                    android:layout_marginTop="-50dp"
-                    android:visibility="gone"
-                     />
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:clipChildren="false"
+                    android:layout_marginTop="-47dp"
+                    android:background="@android:color/transparent"/>
 
                 <!-- 3. PROGRAMS FRAGMENT -->
                 <FrameLayout
@@ -192,7 +188,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
-                    android:elevation="10dp"
+                    android:layout_marginTop="2dp"
+                    android:clipToPadding="false"
+                    android:clipChildren="false"
                     />
 
             </LinearLayout>

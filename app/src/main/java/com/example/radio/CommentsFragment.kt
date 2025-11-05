@@ -11,8 +11,10 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.radio.R
@@ -38,8 +40,10 @@ class CommentsFragment : Fragment() {
     private var firebaseUser: FirebaseUser? = null
     private lateinit var commentsAdapter: CommentsAdapter
     private val commentsList = mutableListOf<Comment>()
+    private lateinit var btn_expand_comments: ImageButton
+    private lateinit var btn_contract_comments: ImageButton
+    private lateinit var cardview_Comments: CardView
 
-    // Ajusta contentId según cómo obtengas el ID del contenido (por ejemplo, desde argumentos)
     private val contentId: String by lazy {
         arguments?.getString("contentId") ?: "default_content_id"
     }
@@ -84,6 +88,35 @@ class CommentsFragment : Fragment() {
             Log.d("DEBUG", "No hay URL de foto, usando imagen por defecto")
             // If no photo URL, set a default image
             ic_my_profile.setImageResource(R.drawable.ic_default_profile)
+        }
+
+        btn_expand_comments = view.findViewById(R.id.icon_expand)
+        btn_contract_comments = view.findViewById(R.id.icon_contract)
+        cardview_Comments = view.findViewById(R.id.cardView_Comments)
+
+        //metodo para contraer el cardview de comentarios
+        btn_contract_comments.setOnClickListener {
+            val params = cardview_Comments.layoutParams
+            val scale = cardview_Comments.context.resources.displayMetrics.density
+            params.height = (200 * scale).toInt()
+            cardview_Comments.layoutParams = params
+
+            btn_contract_comments.visibility = View.GONE
+            btn_expand_comments.visibility = View.VISIBLE
+        }
+        val scrollViewMain = activity?.findViewById<ScrollView>(R.id.scrollMain)
+        //metodo para expandir el cardview de comentarios
+        btn_expand_comments.setOnClickListener {
+            scrollViewMain?.post {
+                // Cambiar altura a match_parent
+                val params = cardview_Comments.layoutParams
+                val scrollViewHeight = scrollViewMain.height ?: 0
+                params?.height = (scrollViewHeight * 0.8).toInt()
+                cardview_Comments.layoutParams = params
+
+                btn_expand_comments.visibility = View.GONE
+                btn_contract_comments.visibility = View.VISIBLE
+            }
         }
 
         return view

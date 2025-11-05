@@ -4,10 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp"
-    android:layout_margin="1dp"
+    android:padding="10dp"
+    android:layout_marginTop="10dp"
     >
-
     <!-- Foto de perfil -->
     <ImageView
         android:id="@+id/iv_profile"
