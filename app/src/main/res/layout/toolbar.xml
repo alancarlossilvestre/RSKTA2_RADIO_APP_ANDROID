@@ -62,7 +62,7 @@
             android:textSize="18sp"
             android:fontFamily="@font/poppins"
             android:paddingTop="5dp"
-
+            android:textStyle="bold"
             />
 
         <ImageButton

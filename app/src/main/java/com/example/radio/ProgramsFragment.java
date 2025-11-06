@@ -53,7 +53,7 @@ public class ProgramsFragment extends Fragment {
 
         // Simulación de datos (normalmente lo manda el Presenter)
         List<String> sampleData = new ArrayList<>();
-        sampleData.add("Card 1");
+        sampleData.add("Nombre del programa 1");
         sampleData.add("Card 2");
         sampleData.add("Card 3");
         sampleData.add("Card 4");
@@ -69,13 +69,13 @@ public class ProgramsFragment extends Fragment {
         private List<String> items = new ArrayList<>();
 
         class CardViewHolder extends RecyclerView.ViewHolder {
-            TextView title;
-            ImageView image;
+            TextView title_program;
+            TextView horus_program;
 
             CardViewHolder(View itemView) {
                 super(itemView);
-                title = itemView.findViewById(R.id.cardTitle);
-                image = itemView.findViewById(R.id.cardImage);
+                title_program = itemView.findViewById(R.id.program_name);
+                horus_program = itemView.findViewById(R.id.horus);
             }
         }
 
@@ -88,7 +88,7 @@ public class ProgramsFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
-            holder.title.setText(items.get(position));
+            holder.title_program.setText(items.get(position));
             // Aquí puedes asignar imágenes dinámicamente si quieres
         }
 

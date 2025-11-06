@@ -1,33 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="165dp"
-    android:layout_height="170dp"
-    android:layout_margin="5dp"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="7dp"
+    android:layout_marginRight="5dp"
     card_view:cardCornerRadius="13dp"
-    card_view:cardElevation="3dp"
-    >
+    android:layout_marginTop="10dp"
+    card_view:cardElevation="3dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp"
+        android:paddingLeft="10dp"
         android:background="@drawable/item_background">
 
-        <ImageView
-            android:id="@+id/cardImage"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/ic_default_profile" />
-
         <TextView
-            android:id="@+id/cardTitle"
+            android:id="@+id/program_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Título"
-            android:textSize="16sp"
-            android:layout_marginTop="8dp"/>
-    </LinearLayout>
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="0dp"
+            android:fontFamily="@font/poppins"
+            android:text="Nombre del Programa número 1"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/horus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:text="de 21:00 a 23:00"
+            android:textColor="#000000"
+            android:textSize="9sp"
+            android:textStyle="bold"
+            android:layout_marginTop="72dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="23dp"/>
+    </LinearLayout>
 </androidx.cardview.widget.CardView>

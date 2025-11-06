@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="280dp"
+    android:layout_height="260dp"
     app:cardCornerRadius="16dp"
     app:cardElevation="5dp"
     android:layout_margin="10dp"
@@ -18,7 +18,7 @@
             android:layout_width="0dp"
             android:layout_height="42dp"
             android:background="?attr/colorPrimary"
-            android:elevation="4dp"
+            android:elevation="2dp"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:layout_constraintTop_toTopOf="parent"
@@ -39,6 +39,7 @@
                     android:text="@string/progrmacion_Semanal"
                     android:textSize="14sp"
                     android:paddingTop="2dp"
+                    android:textStyle="bold"
                     android:fontFamily="@font/poppins"/>
 
             </RelativeLayout>
@@ -47,13 +48,13 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/horizontalRecyclerView"
-            android:padding="16dp"
+            android:paddingLeft="5dp"
             android:background="?attr/colorPrimary"
             android:clipToPadding="false"
             android:scrollbars="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:paddingBottom="2dp"
+            android:paddingBottom="5dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/toolbar_chat"
             app:layout_constraintBottom_toBottomOf="parent"
