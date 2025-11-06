@@ -1,5 +1,9 @@
 package com.example.radio
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -10,8 +14,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.core.animate
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
+import com.example.radio.model.StreamingService
 
 import com.example.radio.presenter.MainPresenter
 import com.example.radio.view.MainView
@@ -106,6 +112,7 @@ class MainActivity : AppCompatActivity(), MainView{
     override fun onDestroy() {
         super.onDestroy()
         presenter.releasePlayer()
+        stopService(Intent(this, StreamingService::class.java))
     }
 
     override fun updatePlayButton(isPlaying: Boolean) {
@@ -232,5 +239,25 @@ class MainActivity : AppCompatActivity(), MainView{
         back_menu.visibility = View.GONE
         menu.visibility = View.VISIBLE
     }
+
+    private val playbackStateReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val isPlaying = intent?.getBooleanExtra("isPlaying", false) ?: false
+            updatePlayButton(isPlaying)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        LocalBroadcastManager.getInstance(this)
+            .registerReceiver(playbackStateReceiver, IntentFilter("com.tuapp.PLAYBACK_STATE_CHANGED"))
+    }
+
+    override fun onPause() {
+        super.onPause()
+        LocalBroadcastManager.getInstance(this)
+            .unregisterReceiver(playbackStateReceiver)
+    }
+
 
 }

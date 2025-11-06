@@ -17,10 +17,12 @@ import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import android.net.Uri
 import android.util.Log
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import com.example.radio.MainActivity
+import com.example.radio.R
 
 class StreamingService : Service(), AudioManager.OnAudioFocusChangeListener {
 
@@ -44,13 +46,22 @@ class StreamingService : Service(), AudioManager.OnAudioFocusChangeListener {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when (intent?.action) {
             "ACTION_PLAY" -> startPlayback()
-            "ACTION_STOP" -> stopPlayback()
+            "ACTION_PAUSE" -> pausePlayback()
         }
         return START_STICKY
     }
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
+    }
+
+    private fun pausePlayback() {
+        exoPlayer.pause()
+        isPlaying = false
+        updateNotification("Pausado")
+        notifyPlaybackStateChanged(false)
+        handler.removeCallbacksAndMessages(null)
+        Log.d(TAG, "Radio pausada - notificación sigue activa")
     }
 
     private fun initializePlayer() {
@@ -108,36 +119,13 @@ class StreamingService : Service(), AudioManager.OnAudioFocusChangeListener {
             }
             exoPlayer.play()
             isPlaying = true
+            notifyPlaybackStateChanged(true)
             updateNotification("Reproduciendo...")
             handler.removeCallbacksAndMessages(null)
             Log.d(TAG, "Tareas de detención canceladas al iniciar reproducción")
         } else {
             Log.w(TAG, "Foco de audio no concedido, no se inicia la reproducción")
             updateNotification("Esperando foco de audio...")
-        }
-    }
-
-    private fun stopPlayback() {
-        exoPlayer.stop()
-        isPlaying = false
-        updateNotification("Reproducción detenida")
-        // Programar la detención del servicio después de 15 minutos
-        handler.postDelayed({
-            try {
-                stopForeground(STOP_FOREGROUND_REMOVE)
-                stopSelf()
-                Log.d(TAG, "Servicio detenido y notificación eliminada después de 15 minutos")
-            } catch (e: Exception) {
-                Log.e(TAG, "Error al detener el servicio después de 15 minutos", e)
-            }
-        }, 3 * 60 * 1000L)
-        Log.d(TAG, "Programada detención del servicio en 15 minutos")
-        // Abandonar foco de audio
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            audioFocusRequest?.let { audioManager.abandonAudioFocusRequest(it) }
-        } else {
-            @Suppress("DEPRECATION")
-            audioManager.abandonAudioFocus(this)
         }
     }
 
@@ -197,40 +185,50 @@ class StreamingService : Service(), AudioManager.OnAudioFocusChangeListener {
     }
 
     private fun createNotification(status: String = "Conectando..."): Notification {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }
         val pendingIntent = PendingIntent.getActivity(
-            this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            this, 0, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
+        // ← ICONO REAL (blanco, vectorial)
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("RSKTA2 Radio Online")
             .setContentText(status)
-            .setSmallIcon(android.R.drawable.ic_notification_overlay)
+            .setSmallIcon(R.mipmap.logo_sin_fondo)
             .setContentIntent(pendingIntent)
             .setOngoing(true)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setStyle(androidx.media.app.NotificationCompat.MediaStyle()
+            )
 
-        if (isPlaying) {
-            val stopIntent = Intent(this, StreamingService::class.java).apply {
-                action = "ACTION_STOP"
-            }
-            val stopPendingIntent = PendingIntent.getService(
-                this, 0, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        // Ícono y texto según estado
+        val (icon, text, action) = if (isPlaying) {
+            Triple(
+                androidx.media3.session.R.drawable.media3_icon_pause,
+                "Pausar",
+                "ACTION_PAUSE"
             )
-            builder.addAction(android.R.drawable.ic_media_pause,"Detener", stopPendingIntent)
         } else {
-            val playIntent = Intent(this, StreamingService::class.java).apply {
-                action = "ACTION_PLAY"
-            }
-            val playPendingIntent = PendingIntent.getService(
-                this, 1, playIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            Triple(
+                androidx.media3.session.R.drawable.media3_icon_play,
+                "Reproducir",
+                "ACTION_PLAY"
             )
-            builder.addAction(android.R.drawable.ic_media_play, "Reproducir", playPendingIntent)
         }
 
-        val notification = builder.build()
-        Log.d(TAG, "Notificación creada con estado: $status, isPlaying: $isPlaying")
-        return notification
+        val actionIntent = Intent(this, StreamingService::class.java).apply {
+            this.action = action
+        }
+        val actionPending = PendingIntent.getService(
+            this, 1, actionIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        builder.addAction(NotificationCompat.Action(icon, text, actionPending))
+        return builder.build()
     }
 
     private fun updateNotification(status: String) {
@@ -245,15 +243,41 @@ class StreamingService : Service(), AudioManager.OnAudioFocusChangeListener {
     }
 
     override fun onDestroy() {
-        exoPlayer.release()
-        handler.removeCallbacksAndMessages(null)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            audioFocusRequest?.let { audioManager.abandonAudioFocusRequest(it) }
-        } else {
-            @Suppress("DEPRECATION")
-            audioManager.abandonAudioFocus(this)
+        try {
+            Log.d(TAG, "onDestroy() llamado → liberando recursos")
+
+            exoPlayer.stop()
+            exoPlayer.release()
+            handler.removeCallbacksAndMessages(null)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                audioFocusRequest?.let { audioManager.abandonAudioFocusRequest(it) }
+            } else {
+                @Suppress("DEPRECATION")
+                audioManager.abandonAudioFocus(this)
+            }
+
+            stopForeground(STOP_FOREGROUND_REMOVE)
+            getSystemService(NotificationManager::class.java).cancel(NOTIFICATION_ID)
+
+        } catch (e: Exception) {
+            Log.e(TAG, "Error al destruir servicio", e)
         }
+
         super.onDestroy()
-        Log.d(TAG, "Servicio destruido")
+    }
+
+    override fun onTaskRemoved(rootIntent: Intent?) {
+        super.onTaskRemoved(rootIntent)
+        Log.d(TAG, "App eliminada de recientes → deteniendo servicio y quitando notificación")
+        stopForeground(STOP_FOREGROUND_REMOVE)
+        getSystemService(NotificationManager::class.java).cancel(NOTIFICATION_ID)
+        stopSelf()
+    }
+
+    private fun notifyPlaybackStateChanged(isPlaying: Boolean) {
+        val intent = Intent("com.tuapp.PLAYBACK_STATE_CHANGED")
+        intent.putExtra("isPlaying", isPlaying)
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
     }
 }
