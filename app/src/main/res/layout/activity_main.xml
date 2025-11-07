@@ -104,7 +104,6 @@
 
     </LinearLayout>
 
-    <!-- PARTE INFERIOR: Contenedor dinámico CON SCROLL -->
     <FrameLayout
         android:id="@+id/bottom_container"
         android:layout_width="0dp"
@@ -115,30 +114,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- SCROLL que envuelve todo -->
         <ScrollView
             android:id="@+id/scrollMain"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            android:clipToPadding="false"
+            android:padding="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="10dp">
+                android:orientation="vertical">
 
-                <!-- 1. LOGIN (centrado) -->
+                <!-- ESPACIADOR SUPERIOR (flexible) -->
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <!-- 1. LOGIN (centrado horizontalmente) -->
                 <LinearLayout
                     android:id="@+id/login_container"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="12dp"
-                    android:paddingStart="20dp"
-                    android:orientation="vertical"
                     android:layout_marginTop="20dp"
-                    android:padding="16dp">
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:paddingStart="20dp"
+                    android:elevation="4dp">
 
                     <LinearLayout
                         android:id="@+id/google_sign_in_button_id"
@@ -155,8 +161,8 @@
                         <ImageView
                             android:layout_width="28dp"
                             android:layout_height="28dp"
-                            android:src="@drawable/google"
-                            android:contentDescription="Google logo" />
+                            android:contentDescription="Google logo"
+                            android:src="@drawable/google" />
 
                         <Space
                             android:layout_width="10dp"
@@ -177,9 +183,6 @@
                     android:id="@+id/comments_fragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:clipChildren="false"
-                    android:layout_marginTop="-47dp"
                     android:background="@android:color/transparent"/>
 
                 <!-- 3. PROGRAMS FRAGMENT -->
@@ -188,10 +191,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:layout_marginTop="2dp"
-                    android:clipToPadding="false"
                     android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:layout_marginTop="8dp"
                     />
+
+                <!-- ESPACIADOR INFERIOR (flexible) -->
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
 
             </LinearLayout>
         </ScrollView>

@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
@@ -153,6 +154,14 @@ class MainActivity : AppCompatActivity(), MainView{
 
         val container = findViewById<FrameLayout>(R.id.comments_fragment)
         container.visibility = View.VISIBLE
+
+        // Cambiar el margen superior programáticamente
+        val params = container.layoutParams as ViewGroup.MarginLayoutParams
+        val marginInDp = -73
+        val scale = resources.displayMetrics.density
+        val marginInPx = (marginInDp * scale + 0.5f).toInt()
+        params.topMargin = marginInPx
+        container.layoutParams = params
 
         val transaction = supportFragmentManager.beginTransaction()
         //animacion

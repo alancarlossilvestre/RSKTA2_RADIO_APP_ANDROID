@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="200dp"
     app:cardCornerRadius="16dp"
-    app:cardElevation="4dp"
+    app:cardElevation="5dp"
     android:layout_margin="10dp"
     android:clipToPadding="false"
     android:id="@+id/cardView_Comments">
@@ -19,7 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="42dp"
             android:background="?attr/colorPrimary"
-            android:elevation="4dp"
+            android:elevation="8dp"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:layout_constraintTop_toTopOf="parent"
@@ -47,7 +47,6 @@
                     android:id="@+id/toolbar_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
                     android:layout_centerInParent="true"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="25dp"
@@ -86,37 +85,14 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-    <!-- Indicador de carga -->
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- Mensaje de estado vacío -->
-    <TextView
-        android:id="@+id/tv_empty_state"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Aún no hay comentarios"
-        android:textSize="16sp"
-        android:textColor="?attr/textInputStyle"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <!-- RecyclerView para los comentarios -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_comments"
         android:background="?attr/colorPrimary"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:paddingBottom="2dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@id/toolbar_chat"
         app:layout_constraintBottom_toTopOf="@id/cl_input_container"
@@ -141,7 +117,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Adjuntar archivo"
+            android:contentDescription="foto de perfil"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
@@ -171,7 +147,6 @@
             android:textColor="?attr/textInputStyle"
             />
 
-
         <!-- Botón enviar -->
         <ImageView
             android:id="@+id/ib_send"
@@ -186,6 +161,32 @@
             android:focusable="true"
             android:clickable="true"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Mensaje de estado vacío -->
+    <TextView
+        android:id="@+id/tv_empty_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Aún no hay comentarios"
+        android:fontFamily="@font/poppins"
+        android:textSize="12sp"
+        android:textColor="#091F5F"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Indicador de carga -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="#091F5F"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

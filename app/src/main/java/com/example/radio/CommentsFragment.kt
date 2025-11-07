@@ -19,18 +19,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.radio.R
 import com.example.radio.ui.theme.utils.CircleTransform
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ServerValue
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
-import org.w3c.dom.Comment
 
 class CommentsFragment : Fragment() {
+
     private lateinit var ic_my_profile: ImageView
     private lateinit var etComment: EditText
     private lateinit var ibSend: ImageView
@@ -56,11 +51,16 @@ class CommentsFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_comments, container, false)
         initViews(view)
         setupRecyclerView()
-        loadComments()
         firebaseUser = FirebaseAuth.getInstance().currentUser
-        etComment.setOnFocusChangeListener {_, hasFocus ->
-            if (hasFocus){
-                rvComments.post{
+
+        // Cargar comentarios
+        showLoading(true)
+        loadComments()
+
+        // Manejo de foco en input
+        etComment.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                rvComments.post {
                     rvComments.scrollToPosition(commentsAdapter.itemCount - 1)
                 }
             }
@@ -75,26 +75,23 @@ class CommentsFragment : Fragment() {
                 etComment.text.clear()
             }
         }
-        //cargo imagen de perfil
+
+        // Cargar imagen de perfil
         firebaseUser?.photoUrl?.let { photoUrl ->
-            Log.d("Perfil Debug", "cargando iamgen desde URL:  $photoUrl")
+            Log.d("Perfil Debug", "Cargando imagen desde URL: $photoUrl")
             Picasso.get()
                 .load(photoUrl)
                 .placeholder(R.drawable.ic_default_profile)
                 .error(R.drawable.ic_default_profile)
                 .transform(CircleTransform())
                 .into(ic_my_profile)
-        } ?: run {
-            Log.d("DEBUG", "No hay URL de foto, usando imagen por defecto")
-            // If no photo URL, set a default image
-            ic_my_profile.setImageResource(R.drawable.ic_default_profile)
-        }
+        } ?: ic_my_profile.setImageResource(R.drawable.ic_default_profile)
 
+        // Configuración de botones de expandir/contraer
         btn_expand_comments = view.findViewById(R.id.icon_expand)
         btn_contract_comments = view.findViewById(R.id.icon_contract)
         cardview_Comments = view.findViewById(R.id.cardView_Comments)
 
-        //metodo para contraer el cardview de comentarios
         btn_contract_comments.setOnClickListener {
             val params = cardview_Comments.layoutParams
             val scale = cardview_Comments.context.resources.displayMetrics.density
@@ -103,19 +100,28 @@ class CommentsFragment : Fragment() {
 
             btn_contract_comments.visibility = View.GONE
             btn_expand_comments.visibility = View.VISIBLE
+            rvComments.post {
+                val count = commentsAdapter.getItemCount()
+                if (count > 0) {
+                    rvComments.smoothScrollToPosition(count - 1)
+                }
+            }
         }
+
         val scrollViewMain = activity?.findViewById<ScrollView>(R.id.scrollMain)
-        //metodo para expandir el cardview de comentarios
         btn_expand_comments.setOnClickListener {
             scrollViewMain?.post {
-                // Cambiar altura a match_parent
                 val params = cardview_Comments.layoutParams
                 val scrollViewHeight = scrollViewMain.height ?: 0
-                params?.height = (scrollViewHeight * 0.8).toInt()
+                params.height = (scrollViewHeight * 0.8).toInt()
                 cardview_Comments.layoutParams = params
 
                 btn_expand_comments.visibility = View.GONE
                 btn_contract_comments.visibility = View.VISIBLE
+                val count = commentsAdapter.getItemCount()
+                if (count > 0) {
+                    rvComments.smoothScrollToPosition(count - 1)
+                }
             }
         }
 
@@ -137,14 +143,10 @@ class CommentsFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = commentsAdapter
         }
-        // Desplazar al último comentario cuando se agrega uno nuevo
-        rvComments.scrollToPosition(commentsList.size - 1)
     }
 
     private fun loadComments() {
-        progressBar.visibility = View.VISIBLE
-        val commentsRef = FirebaseDatabase.getInstance()
-            .getReference("comments/$contentId")
+        val commentsRef = FirebaseDatabase.getInstance().getReference("comments/$contentId")
 
         commentsRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -154,14 +156,15 @@ class CommentsFragment : Fragment() {
                     comment?.let { commentsList.add(it) }
                 }
                 commentsAdapter.notifyDataSetChanged()
-                progressBar.visibility = View.GONE
+
+                showLoading(false)
                 tvEmptyState.visibility = if (commentsList.isEmpty()) View.VISIBLE else View.GONE
-                // Desplazar al último comentario
+
                 rvComments.scrollToPosition(commentsList.size - 1)
             }
 
             override fun onCancelled(error: DatabaseError) {
-                progressBar.visibility = View.GONE
+                showLoading(false)
                 Toast.makeText(requireContext(), "Error al cargar comentarios: ${error.message}", Toast.LENGTH_SHORT).show()
             }
         })
@@ -186,15 +189,16 @@ class CommentsFragment : Fragment() {
         )
 
         reference.child(commentId).setValue(comment)
-            .addOnSuccessListener {
-                // Comentario enviado, no se necesita acción adicional
-            }
             .addOnFailureListener { e ->
                 Toast.makeText(requireContext(), "Error al enviar comentario: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 
-    // Modelo de datos para un comentario
+    private fun showLoading(isLoading: Boolean) {
+        progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        // No ocultamos el RecyclerView para mantener el fondo visible
+    }
+
     data class Comment(
         val commentId: String? = null,
         val senderId: String? = null,
@@ -204,7 +208,6 @@ class CommentsFragment : Fragment() {
         val timestamp: Long? = null
     )
 
-    // Adaptador para el RecyclerView
     inner class CommentsAdapter(private val comments: List<Comment>) :
         RecyclerView.Adapter<CommentsAdapter.CommentViewHolder>() {
 
@@ -227,7 +230,6 @@ class CommentsFragment : Fragment() {
             holder.tvComment.text = comment.content
             holder.tvTimestamp.text = comment.timestamp?.let { formatTimestamp(it) } ?: "Ahora"
 
-            // Cargar foto de perfil sin Glide
             comment.senderPhoto?.let { photoUrl ->
                 Picasso.get()
                     .load(photoUrl)
@@ -241,8 +243,7 @@ class CommentsFragment : Fragment() {
         override fun getItemCount(): Int = comments.size
 
         private fun formatTimestamp(timestamp: Long): String {
-            val currentTime = System.currentTimeMillis()
-            val diff = currentTime - timestamp
+            val diff = System.currentTimeMillis() - timestamp
             return when {
                 diff < 60_000 -> "hace un momento"
                 diff < 3_600_000 -> "${diff / 60_000} minutos atrás"
@@ -250,12 +251,5 @@ class CommentsFragment : Fragment() {
                 else -> "${diff / 86_400_000} días atrás"
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        // Limpiar listeners para evitar memory leaks
-       // FirebaseDatabase.getInstance().getReference("comments/$contentId")
-       //     .removeEventListener { /* No es necesario implementar, solo asegura limpieza */ }
     }
 }

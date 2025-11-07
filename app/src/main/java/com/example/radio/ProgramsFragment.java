@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ public class ProgramsFragment extends Fragment implements ProgramsView {
     private RecyclerView recyclerView;
     private CardAdapter adapter;
     private ProgramsPresenter presenter;
+    private ProgressBar progressBar; // <-- NUEVO
 
     public ProgramsFragment() {
         // Required empty public constructor
@@ -42,11 +44,16 @@ public class ProgramsFragment extends Fragment implements ProgramsView {
         View view = inflater.inflate(R.layout.fragment_programs, container, false);
 
         recyclerView = view.findViewById(R.id.horizontalRecyclerView);
+        progressBar = view.findViewById(R.id.progressBar); // <-- NUEVO
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         adapter = new CardAdapter();
         recyclerView.setAdapter(adapter);
 
         presenter = new ProgramsPresenter(this);
+
+        // Mostrar el ProgressBar mientras se cargan los programas
+        showLoading(true);
         presenter.loadPrograms();
 
         return view;
@@ -55,11 +62,26 @@ public class ProgramsFragment extends Fragment implements ProgramsView {
     @Override
     public void showPrograms(List<Program> programs) {
         adapter.updateData(programs);
+        showLoading(false); // Oculta el ProgressBar
     }
 
     @Override
     public void showProgramsError(String message) {
+        showLoading(false); // Oculta el ProgressBar si hay error
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Muestra u oculta el ProgressBar
+     */
+    private void showLoading(boolean isLoading) {
+        if (isLoading) {
+            progressBar.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.INVISIBLE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
     // Adapter interno
