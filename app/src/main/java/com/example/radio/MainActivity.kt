@@ -157,7 +157,7 @@ class MainActivity : AppCompatActivity(), MainView{
 
         // Cambiar el margen superior programáticamente
         val params = container.layoutParams as ViewGroup.MarginLayoutParams
-        val marginInDp = -73
+        val marginInDp = -63
         val scale = resources.displayMetrics.density
         val marginInPx = (marginInDp * scale + 0.5f).toInt()
         params.topMargin = marginInPx

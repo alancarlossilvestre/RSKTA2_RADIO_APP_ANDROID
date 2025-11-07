@@ -53,6 +53,7 @@
                     android:text="@string/chat_live"
                     android:textSize="14sp"
                     android:paddingTop="2dp"
+                    android:textStyle="bold"
                     android:fontFamily="@font/poppins"/>
 
                 <ImageButton
