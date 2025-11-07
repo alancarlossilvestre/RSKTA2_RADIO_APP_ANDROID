@@ -73,7 +73,7 @@ public class ProgramsFragment extends Fragment implements ProgramsView {
                 super(itemView);
                 title_program = itemView.findViewById(R.id.program_name);
                 horus_program = itemView.findViewById(R.id.horus);
-                description_program = itemView.findViewById(R.id.horus);
+                description_program = itemView.findViewById(R.id.program_description);
             }
         }
 
