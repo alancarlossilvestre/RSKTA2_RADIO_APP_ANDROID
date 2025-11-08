@@ -6,12 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -103,11 +105,13 @@ public class ProgramsFragment extends Fragment implements ProgramsView {
 
         class CardViewHolder extends RecyclerView.ViewHolder {
             TextView title_program, horus_program, description_program;
+            ConstraintLayout rootLayout;
             CardViewHolder(View itemView) {
                 super(itemView);
                 title_program = itemView.findViewById(R.id.program_name);
                 horus_program = itemView.findViewById(R.id.horus);
                 description_program = itemView.findViewById(R.id.program_description);
+                rootLayout = itemView.findViewById(R.id.root_layout);
             }
         }
 
@@ -125,6 +129,18 @@ public class ProgramsFragment extends Fragment implements ProgramsView {
             holder.title_program.setText(program.getName_program());
             holder.horus_program.setText(program.getHorus_program());
             holder.description_program.setText(program.getDescription_program());
+            // Lista de backgrounds para ciclar
+            int[] backgrounds = {
+                    R.drawable.item_background_program_detail,
+                    R.drawable.item_background_program_detail_2,
+                    R.drawable.item_background_program_detail_3
+            };
+
+            // Seleccionar el background según la posición (ciclo)
+            int bgRes = backgrounds[position % backgrounds.length];
+
+            // Asignar el background al ConstraintLayout
+            holder.rootLayout.setBackgroundResource(bgRes);
         }
 
         @Override
