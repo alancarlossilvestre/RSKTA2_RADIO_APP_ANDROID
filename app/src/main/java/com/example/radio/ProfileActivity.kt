@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.savedstate.serialization.saved
 import com.example.radio.ui.theme.utils.CircleTransform
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 
@@ -30,6 +31,8 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var btn_save_data: LinearLayout
 
     private lateinit var progressBar: View
+
+    private var firebaseUser: FirebaseUser? = null
 
     private val database = FirebaseDatabase.getInstance().reference
 
@@ -101,6 +104,8 @@ class ProfileActivity : AppCompatActivity() {
             edad.setBackgroundResource(R.drawable.border_profile_item)
             frase.isEnabled = false
             frase.setBackgroundResource(R.drawable.border_profile_item)
+
+            senUpdateData()
         }
     }
 
@@ -157,4 +162,42 @@ class ProfileActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    private fun senUpdateData() {
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user == null) {
+            Toast.makeText(this, "No hay usuario autenticado", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val uid = user.uid
+        val userRef = FirebaseDatabase.getInstance().getReference("users").child(uid)
+
+        // Obtener valores actualizados
+        val updatedAge = edad.text.toString().trim()
+        val updatedVerse = frase.text.toString().trim()
+
+        // Crear mapa con los valores actualizados
+        val updates = mapOf(
+            "verse" to updatedVerse,
+            "age" to updatedAge,
+            "photoUrl" to (user.photoUrl?.toString() ?: "")
+        )
+
+        progressBar.visibility = View.VISIBLE
+
+        // Actualizar en Firebase
+        userRef.updateChildren(updates)
+            .addOnSuccessListener {
+                progressBar.visibility = View.GONE
+                Toast.makeText(this, "Perfil actualizado correctamente", Toast.LENGTH_SHORT).show()
+
+            }
+            .addOnFailureListener { e ->
+                progressBar.visibility = View.GONE
+                Toast.makeText(this, "Error al actualizar: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+
 }
