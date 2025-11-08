@@ -50,8 +50,8 @@
             android:layout_marginBottom="12dp"
             android:paddingTop="20dp"
             android:paddingBottom="20dp"
-            android:paddingLeft="70dp"
-            android:paddingRight="70dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
             >
 
             <ImageView
@@ -65,7 +65,7 @@
                 android:id="@+id/txtSchedule"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="35dp"
+                android:layout_marginLeft="40dp"
                 android:layout_marginRight="8dp"
                 android:text="Lunes a viernes de 6:00 a.m. a 7:00 a.m."
                 android:textColor="@color/data_time_program"
