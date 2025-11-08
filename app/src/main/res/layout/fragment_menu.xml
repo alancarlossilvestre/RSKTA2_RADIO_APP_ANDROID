@@ -23,11 +23,13 @@
         <!-- Item Perfil -->
         <TextView
             android:id="@+id/item_perfil"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="15dp"
             android:paddingBottom="1dp"
             android:text="Perfil"
+            android:layout_marginLeft="54dp"
+            android:layout_marginRight="54dp"
             android:textColor="#FFFFFF"
             android:textSize="24sp"
             android:clickable="true"
@@ -46,10 +48,12 @@
         <!-- Item Programación -->
         <TextView
             android:id="@+id/item_programacion"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="25dp"
             android:paddingBottom="1dp"
+            android:layout_marginLeft="54dp"
+            android:layout_marginRight="54dp"
             android:fontFamily="@font/poppins"
             android:text="Programación"
             android:textColor="#FFFFFF"
@@ -65,26 +69,6 @@
             android:layout_height="1dp"
             android:background="#88FFFFFF" />
 
-        <!-- Item Eventos -->
-        <TextView
-            android:id="@+id/item_eventos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="25dp"
-            android:paddingBottom="1dp"
-            android:text="Eventos"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            android:clickable="true"
-            android:focusable="true"
-            android:fontFamily="@font/poppins"
-            android:background="?attr/selectableItemBackground"
-            android:gravity="center"
-            android:textStyle="bold"/>
-        <View
-            android:layout_width="300dp"
-            android:layout_height="1dp"
-            android:background="#88FFFFFF" />
     </LinearLayout>
 
     <!-- Contenedor de Logout anclado al fondo -->

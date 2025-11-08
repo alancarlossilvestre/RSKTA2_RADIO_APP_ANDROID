@@ -26,7 +26,6 @@ import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 
 class CommentsFragment : Fragment() {
-
     private lateinit var ic_my_profile: ImageView
     private lateinit var etComment: EditText
     private lateinit var ibSend: ImageView
@@ -39,7 +38,6 @@ class CommentsFragment : Fragment() {
     private lateinit var btn_expand_comments: ImageButton
     private lateinit var btn_contract_comments: ImageButton
     private lateinit var cardview_Comments: CardView
-
     private val contentId: String by lazy {
         arguments?.getString("contentId") ?: "default_content_id"
     }
@@ -77,6 +75,11 @@ class CommentsFragment : Fragment() {
             }
         }
 
+        ic_my_profile.setOnClickListener {
+                val intent = Intent(requireContext(), ProfileActivity::class.java)
+                startActivity(intent)
+        }
+
         // Cargar imagen de perfil
         firebaseUser?.photoUrl?.let { photoUrl ->
             Log.d("Perfil Debug", "Cargando imagen desde URL: $photoUrl")
@@ -96,7 +99,7 @@ class CommentsFragment : Fragment() {
         btn_contract_comments.setOnClickListener {
             val params = cardview_Comments.layoutParams
             val scale = cardview_Comments.context.resources.displayMetrics.density
-            params.height = (200 * scale).toInt()
+            params.height = (280 * scale).toInt()
             cardview_Comments.layoutParams = params
 
             btn_contract_comments.visibility = View.GONE

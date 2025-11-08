@@ -193,7 +193,7 @@
                     android:background="@android:color/transparent"
                     android:clipChildren="false"
                     android:clipToPadding="false"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="5dp"
                     />
 
                 <!-- ESPACIADOR INFERIOR (flexible) -->
@@ -239,7 +239,7 @@
             android:layout_height="85dp"
             android:visibility="gone"
             android:indeterminate="true"
-            android:indeterminateTint="#E60380"
+            android:indeterminateTint="#fafafa"
         />
     </FrameLayout>
 

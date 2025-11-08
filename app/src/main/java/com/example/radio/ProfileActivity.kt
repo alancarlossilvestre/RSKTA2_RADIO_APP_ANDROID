@@ -32,8 +32,6 @@ class ProfileActivity : AppCompatActivity() {
 
     private lateinit var progressBar: View
 
-    private var firebaseUser: FirebaseUser? = null
-
     private val database = FirebaseDatabase.getInstance().reference
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,22 +69,21 @@ class ProfileActivity : AppCompatActivity() {
             loadUserDataFromDatabase(senderId, senderName, senderPhoto)
         } else {
             progressBar.visibility = View.VISIBLE
-            //Si no se pasa senderId, mostrar usuario autenticado
             val firebaseUser = FirebaseAuth.getInstance().currentUser
             firebaseUser?.let { user ->
-                progressBar.visibility = View.GONE
-                nombre.text = user.displayName ?: "Usuario Desconocido"
-                nombre2.setText(user.displayName ?: "Usuario Desconocido")
-                email.setText(user.email ?: "")
 
-                Picasso.get()
-                    .load(user.photoUrl)
-                    .placeholder(R.drawable.ic_default_profile)
-                    .error(R.drawable.ic_default_profile)
-                    .transform(CircleTransform())
-                    .into(fotoPerfil)
+                loadUserDataFromDatabase(
+                    user.uid,
+                    user.displayName,
+                    user.photoUrl?.toString()
+                )
+
+                // Habilitamos botones de edición para el perfil propio
+                findViewById<ImageButton>(R.id.btn_edit_data).visibility = View.VISIBLE
+                findViewById<LinearLayout>(R.id.btn_save_data).visibility = View.VISIBLE
             }
         }
+
 
         btn_edit_data = findViewById(R.id.btn_edit_data)
         btn_save_data = findViewById(R.id.btn_save_data)
@@ -126,7 +123,7 @@ class ProfileActivity : AppCompatActivity() {
                     val name = snapshot.child("name").getValue(String::class.java) ?: senderName
                     val verse = snapshot.child("verse").getValue(String::class.java)
                     val emailValue = snapshot.child("email").getValue(String::class.java)
-                    val address = snapshot.child("address").getValue(String::class.java)
+                    val edadValue = snapshot.child("age").getValue(String::class.java)
                     val photoUrl = snapshot.child("photoUrl").getValue(String::class.java) ?: senderPhoto
 
                     // Mostrar los datos
@@ -134,7 +131,7 @@ class ProfileActivity : AppCompatActivity() {
                     nombre2.setText(name ?: "")
                     frase.setText(verse ?: "Sin frase bíblica")
                     email.setText(emailValue ?: "")
-                    //direccion.setText(address ?: "")
+                    edad.setText(edadValue ?: "")
 
                     Picasso.get()
                         .load(photoUrl)
@@ -176,6 +173,7 @@ class ProfileActivity : AppCompatActivity() {
         // Obtener valores actualizados
         val updatedAge = edad.text.toString().trim()
         val updatedVerse = frase.text.toString().trim()
+
 
         // Crear mapa con los valores actualizados
         val updates = mapOf(
