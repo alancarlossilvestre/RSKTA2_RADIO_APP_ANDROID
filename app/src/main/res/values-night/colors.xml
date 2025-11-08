@@ -5,5 +5,6 @@
     <color name="ActivityColor">#1A1F36</color>
     <color name="textToolbar">#e7eaf2</color>
     <color name="textInputStyle">#f2f2f2</color>
-    <color name="color_item_profile_input">#FAFAFA</color>
+    <color name="item_profile_input">#FAFAFA</color>
+    <color name="data_time_program">#091F5F</color>
 </resources>

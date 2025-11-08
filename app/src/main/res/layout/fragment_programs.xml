@@ -44,6 +44,19 @@
                     android:paddingTop="2dp"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"/>
+
+                <ImageButton
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/btn_go_prgorams"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:contentDescription="@string/icono_de_compartir"
+                    android:src="@drawable/go_programs_activity"
+                    android:background="@null"/>
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
 
@@ -70,7 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:indeterminateTint="@android:color/white"
+            android:indeterminateTint="@color/colorPrimary"
             android:visibility="gone"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

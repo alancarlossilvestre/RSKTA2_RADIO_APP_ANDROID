@@ -1,9 +1,11 @@
 package com.example.radio;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +28,8 @@ public class ProgramsFragment extends Fragment implements ProgramsView {
     private RecyclerView recyclerView;
     private CardAdapter adapter;
     private ProgramsPresenter presenter;
-    private ProgressBar progressBar; // <-- NUEVO
+    private ProgressBar progressBar;
+    private ImageButton btn_ir_pograms;
 
     public ProgramsFragment() {
         // Required empty public constructor
@@ -44,7 +47,8 @@ public class ProgramsFragment extends Fragment implements ProgramsView {
         View view = inflater.inflate(R.layout.fragment_programs, container, false);
 
         recyclerView = view.findViewById(R.id.horizontalRecyclerView);
-        progressBar = view.findViewById(R.id.progressBar); // <-- NUEVO
+        progressBar = view.findViewById(R.id.progressBar);
+        btn_ir_pograms = view.findViewById(R.id.btn_go_prgorams);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         adapter = new CardAdapter();
@@ -55,6 +59,14 @@ public class ProgramsFragment extends Fragment implements ProgramsView {
         // Mostrar el ProgressBar mientras se cargan los programas
         showLoading(true);
         presenter.loadPrograms();
+
+        btn_ir_pograms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ProgramsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }

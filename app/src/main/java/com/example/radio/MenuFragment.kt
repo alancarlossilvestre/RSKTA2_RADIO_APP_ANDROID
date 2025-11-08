@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.radio.presenter.MainPresenter
+import com.example.radio.presenter.ProgramsPresenter
 import com.example.radio.view.MainView
 import com.google.firebase.auth.FirebaseAuth
 
@@ -19,6 +20,7 @@ class MenuFragment : Fragment() {
     private lateinit var presenter: MainPresenter
     private lateinit var logoutButton: LinearLayout
     private lateinit var btn_perfil: TextView
+    private lateinit var btn_programs: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +53,12 @@ class MenuFragment : Fragment() {
                 val intent = Intent(requireContext(), ProfileActivity::class.java)
                 startActivity(intent)
 
+            }
+            btn_programs = view.findViewById(R.id.item_programacion)
+
+            btn_programs.setOnClickListener {
+                val intent = Intent(requireContext(), ProgramsActivity::class.java)
+                startActivity(intent)
             }
         }
 
