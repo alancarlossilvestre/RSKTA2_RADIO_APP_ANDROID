@@ -16,4 +16,5 @@
     <string name="chat_live">Chat en vivo</string>
     <string name="logout">Cerrar Sesión</string>
     <string name="progrmacion_Semanal">Programación Semanal</string>
+    <string name="title_activity_profile">ProfileActivity</string>
 </resources>

@@ -38,7 +38,18 @@
             android:padding="1dp"
             android:src="@drawable/back_menu" />
 
-
+        <ImageButton
+            android:id="@+id/back_menu_main"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:clickable="true"
+            android:contentDescription="@string/icono_de_menu"
+            android:padding="1dp"
+            android:visibility="gone"
+            android:src="@drawable/back_main_activity" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/text_left_icon"

@@ -5,4 +5,5 @@
     <color name="ActivityColor">#F5F5F5</color>
     <color name="textToolbar">#0C297E</color>
     <color name="textInputStyle">#000000</color>
+    <color name="item_profile_input">#93989D</color>
 </resources>

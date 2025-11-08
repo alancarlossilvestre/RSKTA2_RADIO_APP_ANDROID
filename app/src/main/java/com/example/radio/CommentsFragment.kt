@@ -1,5 +1,6 @@
 package com.example.radio
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -238,6 +239,17 @@ class CommentsFragment : Fragment() {
                     .transform(CircleTransform())
                     .into(holder.ivProfile)
             } ?: holder.ivProfile.setImageResource(R.drawable.ic_default_profile)
+
+            //funcionalidad para ver el perfil de todos los usuarios
+            holder.ivProfile.setOnClickListener {
+                val context = holder.itemView.context
+                val intent = Intent(context, ProfileActivity::class.java)
+                intent.putExtra("senderId", comment.senderId)
+                intent.putExtra("senderName", comment.senderName)
+                intent.putExtra("senderPhoto", comment.senderPhoto)
+
+                context.startActivity(intent)
+            }
         }
 
         override fun getItemCount(): Int = comments.size
@@ -252,4 +264,5 @@ class CommentsFragment : Fragment() {
             }
         }
     }
+
 }

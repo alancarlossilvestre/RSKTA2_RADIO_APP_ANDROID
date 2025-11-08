@@ -78,6 +78,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.firebase.database.ktx)
     implementation(libs.androidx.media3.session)
+    implementation(libs.androidx.activity)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

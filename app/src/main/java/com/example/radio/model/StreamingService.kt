@@ -125,7 +125,7 @@ class StreamingService : Service(), AudioManager.OnAudioFocusChangeListener {
             Log.d(TAG, "Tareas de detención canceladas al iniciar reproducción")
         } else {
             Log.w(TAG, "Foco de audio no concedido, no se inicia la reproducción")
-            updateNotification("Esperando foco de audio...")
+            updateNotification("Conectando...")
         }
     }
 
@@ -136,7 +136,7 @@ class StreamingService : Service(), AudioManager.OnAudioFocusChangeListener {
                 if (isPlaying) {
                     exoPlayer.pause()
                     isPlaying = false
-                    updateNotification("Reproducción pausada (otro audio)")
+                    updateNotification("Reproducción pausada")
                 }
             }
             AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
@@ -144,7 +144,7 @@ class StreamingService : Service(), AudioManager.OnAudioFocusChangeListener {
                 if (isPlaying) {
                     exoPlayer.pause()
                     isPlaying = false
-                    updateNotification("Reproducción pausada (interrupción)")
+                    updateNotification("Reproducción pausada")
                 }
             }
             AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> {
@@ -152,7 +152,7 @@ class StreamingService : Service(), AudioManager.OnAudioFocusChangeListener {
                 if (isPlaying) {
                     exoPlayer.pause()
                     isPlaying = false
-                    updateNotification("Reproducción pausada (interrupción)")
+                    updateNotification("Reproducción pausada ")
                 }
             }
             AudioManager.AUDIOFOCUS_GAIN -> {

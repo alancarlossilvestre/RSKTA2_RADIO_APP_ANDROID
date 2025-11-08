@@ -1,12 +1,14 @@
 package com.example.radio
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.example.radio.presenter.MainPresenter
 import com.example.radio.view.MainView
 import com.google.firebase.auth.FirebaseAuth
@@ -16,6 +18,7 @@ class MenuFragment : Fragment() {
 
     private lateinit var presenter: MainPresenter
     private lateinit var logoutButton: LinearLayout
+    private lateinit var btn_perfil: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +44,14 @@ class MenuFragment : Fragment() {
 
             // opcional: mostrar/ocultar según si hay usuario logueado
             updateLogoutVisibility()
+
+            btn_perfil = view.findViewById(R.id.item_perfil)
+
+            btn_perfil.setOnClickListener {
+                val intent = Intent(requireContext(), ProfileActivity::class.java)
+                startActivity(intent)
+
+            }
         }
 
         private fun updateLogoutVisibility() {
