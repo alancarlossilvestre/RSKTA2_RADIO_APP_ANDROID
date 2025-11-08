@@ -131,9 +131,9 @@ public class ProgramsFragment extends Fragment implements ProgramsView {
             holder.description_program.setText(program.getDescription_program());
             // Lista de backgrounds para ciclar
             int[] backgrounds = {
-                    R.drawable.item_background_program_detail,
-                    R.drawable.item_background_program_detail_2,
-                    R.drawable.item_background_program_detail_3
+                    R.drawable.item_background_program_card,
+                    R.drawable.item_background_program_card_2,
+                    R.drawable.item_background_program_card_3
             };
 
             // Seleccionar el background según la posición (ciclo)
